@@ -60,9 +60,4 @@ public class SquadTest {
         assertTrue(names.contains("Inon Katz"));
     }
 
-    @Test
-    public void testReleaseAgents(){
-
-    }
-
 }
