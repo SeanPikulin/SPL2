@@ -1,5 +1,10 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,16 +16,21 @@ import java.util.List;
  * You can add ONLY private fields and methods to this class as you see fit.
  */
 public class Diary {
+
+	private List<Report> reports;
+	private int total;
+	private static class InstanceHolder {
+		private static Diary instance=new Diary();
+	}
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static Diary getInstance() {
-		//TODO: Implement this
-		return null;
+		return InstanceHolder.instance;
 	}
 
 	public List<Report> getReports() {
-		return null;
+		return this.reports;
 	}
 
 	/**
@@ -28,7 +38,7 @@ public class Diary {
 	 * @param reportToAdd - the report to add
 	 */
 	public void addReport(Report reportToAdd){
-		//TODO: Implement this
+		this.reports.add(reportToAdd);
 	}
 
 	/**
@@ -39,7 +49,19 @@ public class Diary {
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		//TODO: Implement this
+		JSONObject obj=new JSONObject();
+		JSONArray reports=new JSONArray();
+		for (String gadget:this.reports) {
+			reports.add(gadget);
+		}
+		obj.put("List of Gadgets",gadgets);
+		try {
+			FileWriter file=new FileWriter(filename);
+			file.write(obj.toJSONString());
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -47,7 +69,6 @@ public class Diary {
 	 * @return the total number of received missions (executed / aborted) be all the M-instances.
 	 */
 	public int getTotal(){
-		//TODO: Implement this
-		return 0;
+		return this.total;
 	}
 }

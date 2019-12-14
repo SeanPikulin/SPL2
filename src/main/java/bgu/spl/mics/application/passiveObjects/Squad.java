@@ -1,6 +1,8 @@
 package bgu.spl.mics.application.passiveObjects;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Passive data-object representing a information about an agent in MI6.
@@ -11,13 +13,14 @@ import java.util.Map;
 public class Squad {
 
 	private Map<String, Agent> agents;
-
+	private static class InstanceHolder {
+		private static Squad instance=new Squad();
+	}
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static Squad getInstance() {
-		//TODO: Implement this
-		return null;
+		return  InstanceHolder.instance;
 	}
 
 	/**
@@ -27,14 +30,19 @@ public class Squad {
 	 * 						of the squad.
 	 */
 	public void load (Agent[] agents) {
-		// TODO Implement this
+		for(int i=0;i<agents.length;i++){
+			this.agents.put(agents[i].getSerialNumber(),agents[i]);
+		}
 	}
 
 	/**
 	 * Releases agents.
 	 */
 	public void releaseAgents(List<String> serials){
-		// TODO Implement this
+		for (String serialNumber:serials) {
+			this.agents.get(serialNumber).release();
+		}
+		notifyAll();
 	}
 
 	/**
@@ -42,7 +50,13 @@ public class Squad {
 	 * @param time   milliseconds to sleep
 	 */
 	public void sendAgents(List<String> serials, int time){
-		// TODO Implement this
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		releaseAgents(serials);
 	}
 
 	/**
@@ -51,18 +65,45 @@ public class Squad {
 	 * @return ‘false’ if an agent of serialNumber ‘serial’ is missing, and ‘true’ otherwise
 	 */
 	public boolean getAgents(List<String> serials){
-		// TODO Implement this
-		return false;
+		for(int i=0;i<serials.size();i++){
+			if(!this.agents.containsKey(serials.get(i)))
+				return false;
+		}
+		synchronized (this) {
+			while (!allNotAcquired(serials)) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+			for(int i=0;i<serials.size();i++){
+				this.agents.get(serials.get(i)).acquire();
+			}
+		}
+		return true;
 	}
 
+	private boolean allNotAcquired(List<String> serials){
+		for(int i=0;i<serials.size();i++){
+			if(!this.agents.get(serials.get(i)).isAvailable())
+				return false;
+		}
+		return true;
+	}
     /**
      * gets the agents names
      * @param serials the serial numbers of the agents
      * @return a list of the names of the agents with the specified serials.
      */
     public List<String> getAgentsNames(List<String> serials){
-        // TODO Implement this
-	    return null;
+        List<String> result=new Vector<>();
+        for(int i=0;i<serials.size();i++){
+        	if(agents.containsKey(serials.get(i)))
+        		result.add(agents.get(serials.get(i)).getName());
+		}
+        return result;
     }
 
 }

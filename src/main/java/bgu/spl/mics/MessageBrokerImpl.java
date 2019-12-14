@@ -1,5 +1,7 @@
 package bgu.spl.mics;
 
+import java.util.*;
+
 /**
  * The {@link MessageBrokerImpl class is the implementation of the MessageBroker interface.
  * Write your implementation here!
@@ -7,17 +9,24 @@ package bgu.spl.mics;
  */
 public class MessageBrokerImpl implements MessageBroker {
 
+	private List<Queue<Message>> queues;
+	private static MessageBrokerImpl INSTANCE = null;
+
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static MessageBroker getInstance() {
-		//TODO: Implement this
-		return null;
+		if (INSTANCE == null)
+			INSTANCE = new MessageBrokerImpl();
+		return INSTANCE;
+	}
+
+	private MessageBrokerImpl() {
+		queues = new Vector<>();
 	}
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, Subscriber m) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -48,7 +57,7 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void register(Subscriber m) {
-		// TODO Auto-generated method stub
+		queues.add(new PriorityQueue<>());
 
 	}
 

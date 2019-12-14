@@ -1,6 +1,11 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
+import java.util.Vector;
+
+import org.json.simple.*;
 /**
  *  That's where Q holds his gadget (e.g. an explosive pen was used in GoldenEye, a geiger counter in Dr. No, etc).
  * <p>
@@ -10,13 +15,15 @@ import java.util.List;
  * You can add ONLY private fields and methods to this class as you see fit.
  */
 public class Inventory {
-	private List<String> gadgets;
+	private List<String> gadgets=new Vector<>();
+	private static class InstanceHolder {
+		private static Inventory instance=new Inventory();
+	}
 	/**
      * Retrieves the single instance of this class.
      */
 	public static Inventory getInstance() {
-		//TODO: Implement this
-		return null;
+		return InstanceHolder.instance;
 	}
 
 	/**
@@ -27,7 +34,9 @@ public class Inventory {
      * 						of the inventory.
      */
 	public void load (String[] inventory) {
-		//TODO: Implement this
+		for(int i=0;i<inventory.length;i++){
+			this.gadgets.add(inventory[i]);
+		}
 	}
 	
 	/**
@@ -37,9 +46,16 @@ public class Inventory {
      * @return 	‘false’ if the gadget is missing, and ‘true’ otherwise
      */
 	public boolean getItem(String gadget){
-		//TODO: Implement this
-		return true;
+		synchronized (this) {
+			if (!gadgets.contains(gadget))
+				return false;
+			else {
+				gadgets.remove(gadget);
+				return true;
+			}
+		}
 	}
+
 
 	/**
 	 *
@@ -49,6 +65,18 @@ public class Inventory {
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		//TODO: Implement this
+		JSONObject obj=new JSONObject();
+		JSONArray gadgets=new JSONArray();
+		for (String gadget:this.gadgets) {
+			gadgets.add(gadget);
+		}
+		obj.put("List of Gadgets",gadgets);
+		try {
+			FileWriter file=new FileWriter(filename);
+			file.write(obj.toJSONString());
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

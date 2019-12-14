@@ -49,28 +49,6 @@ public class InventoryTest {
 
     @Test
     public void testPrintToFile(){
-        inventory.printToFile("Test");
-
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("Test"))
-        {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray gadgetsList = (JSONArray) obj;
-            for (Object gadget : gadgetsList) {
-                assertTrue(inventory.getItem((String)gadget));
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
     }
 }
