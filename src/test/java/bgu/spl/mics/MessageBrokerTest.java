@@ -47,7 +47,14 @@ public class MessageBrokerTest {
 //            e.printStackTrace();
 //        }
 //        assertEquals(p,event);//there is a message
-        s2.sendEvent(event);
+        s1.sendEvent(event);
+        try {
+            Message message=m.awaitMessage(s1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        s1.complete(event,);
+
 
     }
 
