@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e825d3bf-0426-4c84-826b-15bc5afb0bee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummyBroadcast.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummyCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummyEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummySubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/MI6Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/MI6Runner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Diary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Diary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/MissionInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/MissionInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/FutureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/FutureTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/InventoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/InventoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/MessageBrokerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/MessageBrokerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,23 +110,37 @@
       <workItem from="1575897437607" duration="6560000" />
       <workItem from="1575926986511" duration="2214000" />
       <workItem from="1576180786671" duration="18307000" />
-      <workItem from="1576325383693" duration="15575000" />
+      <workItem from="1576325383693" duration="16401000" />
+      <workItem from="1576367103126" duration="2218000" />
     </task>
+    <task id="LOCAL-00001" summary="&quot;passive objects added+Future&quot;">
+      <created>1576341962602</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1576341962603</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;passive objects added+Future&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;passive objects added+Future&quot;" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="2681" y="236" width="374" height="582" key="#com.intellij.ide.util.MemberChooser" timestamp="1576184005151">
+    <state x="2681" y="236" width="374" height="582" key="#com.intellij.ide.util.MemberChooser" timestamp="1576368189659">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2681" y="236" width="374" height="582" key="#com.intellij.ide.util.MemberChooser/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576184005151" />
+    <state x="2681" y="236" width="374" height="582" key="#com.intellij.ide.util.MemberChooser/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576368189659" />
     <state x="803" y="257" width="374" height="599" key="#com.intellij.ide.util.MemberChooser/70.27.1850.1053@70.27.1850.1053" timestamp="1575823963464" />
-    <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1575929285513">
-      <screen x="70" y="27" width="1296" height="741" />
+    <state x="374" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1576341962286">
+      <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2/70.27.1296.741@70.27.1296.741" timestamp="1575929285513" />
+    <state x="374" y="27" key="CommitChangelistDialog2/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341962286" />
     <state x="778" y="311" width="447" height="498" key="FileChooserDialogImpl" timestamp="1575906392805">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
@@ -185,10 +185,14 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="484" y="188" width="1022" height="737" key="SettingsEditor/70.27.1850.1053@70.27.1850.1053" timestamp="1575897590924" />
-    <state x="2523" y="363" key="com.intellij.ide.util.TipDialog" timestamp="1576325388684">
+    <state x="590" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576341966039">
+      <screen x="70" y="27" width="1850" height="1053" />
+    </state>
+    <state x="590" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341966039" />
+    <state x="2523" y="363" key="com.intellij.ide.util.TipDialog" timestamp="1576367113477">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2523" y="363" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576325388684" />
+    <state x="2523" y="363" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576367113477" />
     <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1575897519233" />
     <state x="2625" y="168" width="500" height="750" key="refactoring.ChangeSignatureDialog" timestamp="1576190584558">
       <screen x="1920" y="0" width="1920" height="1080" />
