@@ -1,5 +1,7 @@
 package bgu.spl.mics;
 
+import bgu.spl.mics.application.passiveObjects.Squad;
+
 import java.util.*;
 
 /**
@@ -9,20 +11,20 @@ import java.util.*;
  */
 public class MessageBrokerImpl implements MessageBroker {
 
-	private List<Queue<Message>> queues;
-	private static MessageBrokerImpl INSTANCE = null;
+	private Map<Subscriber, Queue<Message>> maps;
+	private static class InstanceHolder {
+		private static MessageBroker instance = new MessageBrokerImpl();
+	}
 
 	/**
 	 * Retrieves the single instance of this class.
 	 */
 	public static MessageBroker getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new MessageBrokerImpl();
-		return INSTANCE;
+		return InstanceHolder.instance;
 	}
 
 	private MessageBrokerImpl() {
-		queues = new Vector<>();
+
 	}
 
 	@Override
@@ -57,7 +59,6 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void register(Subscriber m) {
-		queues.add(new PriorityQueue<>());
 
 	}
 

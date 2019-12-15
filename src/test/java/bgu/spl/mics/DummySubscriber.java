@@ -1,10 +1,8 @@
 package bgu.spl.mics;
 
-import static javafx.scene.input.KeyCode.T;
-
 
 public class DummySubscriber extends Subscriber {
-    private Future future=new Future();
+    private Future<Integer> future=new Future<>();
     MessageBroker m=MessageBrokerImpl.getInstance();
 
     @Override
@@ -15,15 +13,13 @@ public class DummySubscriber extends Subscriber {
         super("Inon");
     }
 
-    public final <T> void sendEvent (Event<T> event){
+    public final void sendEvent (Event<Integer> event){
         future=m.sendEvent(event);
     }
 
-    public<T> Future<T> getFuture() {
+    public Future<Integer> getFuture() {
         return future;
     }
 
-    public <T> T getResult(Future<T> f){
-        return f.result;
-    }
+    public Integer getResult() { return this.future.result; }
 }

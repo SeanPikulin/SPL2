@@ -1,8 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Passive data-object representing a information about an agent in MI6.
@@ -15,6 +12,10 @@ public class Squad {
 	private Map<String, Agent> agents;
 	private static class InstanceHolder {
 		private static Squad instance=new Squad();
+	}
+
+	private Squad() {
+		agents = new HashMap<>();
 	}
 	/**
 	 * Retrieves the single instance of this class.

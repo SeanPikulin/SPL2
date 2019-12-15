@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Passive object representing the diary where all reports are stored.
@@ -21,6 +22,11 @@ public class Diary {
 	private int total;
 	private static class InstanceHolder {
 		private static Diary instance=new Diary();
+	}
+
+	private Diary() {
+		reports = new Vector<>();
+		total = 0;
 	}
 	/**
 	 * Retrieves the single instance of this class.
@@ -51,10 +57,10 @@ public class Diary {
 	public void printToFile(String filename){
 		JSONObject obj=new JSONObject();
 		JSONArray reports=new JSONArray();
-		for (String gadget:this.reports) {
-			reports.add(gadget);
+		for (Report report:this.reports) {
+			reports.add(report);
 		}
-		obj.put("List of Gadgets",gadgets);
+		obj.put("List of Gadgets",reports);
 		try {
 			FileWriter file=new FileWriter(filename);
 			file.write(obj.toJSONString());

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MessageBrokerTest {
     MessageBroker m;
     Broadcast broadcast;
-    Callback<Integer> callback;
     DummyEvent event;
     DummySubscriber s1;
     SimplePublisher s2;
@@ -16,7 +15,6 @@ public class MessageBrokerTest {
     public void setUp(){
         m= MessageBrokerImpl.getInstance();
         broadcast=new DummyBroadcast();
-        callback=new DummyCallback();
         event=new DummyEvent();
         s2=new SimplePublisher();
         s1 = new DummySubscriber(){
@@ -27,6 +25,7 @@ public class MessageBrokerTest {
                 m.subscribeBroadcast(broadcast.getClass(),s1);
             }
         };
+
 
     }
 
@@ -39,23 +38,14 @@ public class MessageBrokerTest {
 
     @Test
     public void testSubscribeEvent(){
-//        m.sendEvent(event);
-//        Message p= null;
-//        try {
-//            p = m.awaitMessage(s);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        assertEquals(p,event);//there is a message
-        s1.sendEvent(event);
+        s1.sendEvent(event);//this function calls the m.sendEvent
         try {
-            Message message=m.awaitMessage(s1);
+            m.awaitMessage(s1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        s1.complete(event,);
-
-
+        s1.complete(event,42);
+        assertEquals(s1.getResult(), 42);
     }
 
     @Test
@@ -63,7 +53,7 @@ public class MessageBrokerTest {
         m.sendEvent(event);
         Message p= null;
         try {
-            p = m.awaitMessage(s);
+            p = m.awaitMessage(s1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -72,7 +62,7 @@ public class MessageBrokerTest {
         m.sendBroadcast(broadcast);
         Message b= null;
         try {
-            b = m.awaitMessage(s);
+            b = m.awaitMessage(s1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -84,7 +74,7 @@ public class MessageBrokerTest {
         m.sendBroadcast(broadcast);
         Message b= null;
         try {
-            b = m.awaitMessage(s);
+            b = m.awaitMessage(s1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -104,7 +94,7 @@ public class MessageBrokerTest {
         m.sendBroadcast(broadcast);
         Message b= null;
         try {
-            b = m.awaitMessage(s);
+            b = m.awaitMessage(s1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 package bgu.spl.mics;
 
-import java.util.Queue;
+import java.util.*;
 
 /**
  * The Subscriber is an abstract class that any subscriber in the system
@@ -19,7 +19,9 @@ import java.util.Queue;
  */
 public abstract class Subscriber extends RunnableSubPub {
     private boolean terminated = false;
-    private Queue<Message> queue;
+    private Map<Class<? extends Event<?>>, Callback<?>> eventTypeMap;
+    private Map<Class<? extends Broadcast>, Callback<?>> broadcastTypeMap;
+    MessageBroker broker;
 
     /**
      * @param name the Subscriber name (used mainly for debugging purposes -
@@ -27,6 +29,9 @@ public abstract class Subscriber extends RunnableSubPub {
      */
     public Subscriber(String name) {
         super(name);
+        eventTypeMap = new HashMap<>();
+        broadcastTypeMap = new HashMap<>();
+        broker = MessageBrokerImpl.getInstance();
     }
 
 
@@ -52,7 +57,7 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-        //TODO: implement this.
+        eventTypeMap.put(type, callback);
     }
 
     /**
@@ -76,7 +81,7 @@ public abstract class Subscriber extends RunnableSubPub {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-        //TODO: implement this.
+        broadcastTypeMap.put(type, callback);
     }
 
     /**
@@ -90,7 +95,7 @@ public abstract class Subscriber extends RunnableSubPub {
      *               {@code e}.
      */
     protected final <T> void complete(Event<T> e, T result) {
-        //TODO: implement this.
+        broker.complete(e, result);
     }
 
     /**
@@ -109,7 +114,13 @@ public abstract class Subscriber extends RunnableSubPub {
     public final void run() {
         initialize();
         while (!terminated) {
-            System.out.println("NOT IMPLEMENTED!!!"); //TODO: you should delete this line :)
+            Message m = null;
+            try {
+                m = broker.awaitMessage(this);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
