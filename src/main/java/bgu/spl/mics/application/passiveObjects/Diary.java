@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Passive object representing the diary where all reports are stored.
@@ -19,14 +20,14 @@ import java.util.Vector;
 public class Diary {
 
 	private List<Report> reports;
-	private int total;
+	private AtomicInteger total;
 	private static class InstanceHolder {
 		private static Diary instance=new Diary();
 	}
 
 	private Diary() {
 		reports = new Vector<>();
-		total = 0;
+		total = new AtomicInteger(0);
 	}
 	/**
 	 * Retrieves the single instance of this class.
@@ -75,6 +76,16 @@ public class Diary {
 	 * @return the total number of received missions (executed / aborted) be all the M-instances.
 	 */
 	public int getTotal(){
-		return this.total;
+		return this.total.get();
+	}
+
+	/**
+	 * Increments the total number of received missions by 1
+	 */
+	public void incrementTotal(){
+		int val;
+		do {
+			val = getTotal();
+		} while (!total.compareAndSet(val, val + 1));
 	}
 }

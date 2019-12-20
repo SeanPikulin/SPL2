@@ -26,9 +26,6 @@ public class MissionInfo {
 		this.duration = duration;
 	}
 
-	public MissionInfo() {
-
-	}
 
 	/**
      * Sets the name of the mission.
@@ -72,16 +69,16 @@ public class MissionInfo {
 		return this.gadget;
 	}
 
-    /**
-     * Sets the time the mission was issued in milliseconds.
-     */
+	/**
+	 * Sets the time the mission was issued in time ticks.
+	 */
     public void setTimeIssued(int timeIssued) {
         this.timeIssued=timeIssued;
     }
 
 	/**
-     * Retrieves the time the mission was issued in milliseconds.
-     */
+	 * Retrieves the time the mission was issued in time ticks.
+	 */
 	public int getTimeIssued() {
 		return this.timeIssued;
 	}

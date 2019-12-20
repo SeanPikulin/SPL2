@@ -1,7 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
 
-import bgu.spl.mics.application.subscribers.Q;
-
 import java.util.List;
 
 /**
@@ -34,9 +32,6 @@ public class Report {
 		this.timeCreated = timeCreated;
 	}
 
-	public Report() {
-
-	}
 
 	/**
      * Retrieves the mission name.
@@ -85,15 +80,15 @@ public class Report {
 	 * <p>
 	 * @return The serial numbers of the agents.
 	 */
-	public List<String> getAgentsSerialNumbersNumber() {
+	public List<String> getAgentsSerialNumbers() {
 		return this.agentsSerialNumbers;
 	}
 
 	/**
 	 * Sets the serial numbers of the agents.
 	 */
-	public void setAgentsSerialNumbersNumber(List<String> agentsSerialNumbersNumber) {
-		this.agentsSerialNumbers=agentsSerialNumbersNumber;
+	public void setAgentsSerialNumbers(List<String> agentsSerialNumbers) {
+		this.agentsSerialNumbers=agentsSerialNumbers;
 	}
 
 	/**
