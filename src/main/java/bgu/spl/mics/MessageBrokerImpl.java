@@ -1,8 +1,8 @@
 package bgu.spl.mics;
 
-import bgu.spl.mics.application.passiveObjects.Squad;
-
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The {@link MessageBrokerImpl class is the implementation of the MessageBroker interface.
@@ -11,7 +11,11 @@ import java.util.*;
  */
 public class MessageBrokerImpl implements MessageBroker {
 
-	private Map<Subscriber, Queue<Message>> maps;
+	private Map<Subscriber, BlockingQueue<Message>> queues;
+	private Map<Event, Future> eventFutureMap;
+	private Map<Class<? extends Event>, List<Subscriber>> eventSubscriberMap;
+	private Map<Class<? extends Broadcast>, List<Subscriber>> broadcastSubscriberMap;
+	private AtomicInteger index;
 	private static class InstanceHolder {
 		private static MessageBroker instance = new MessageBrokerImpl();
 	}
@@ -24,54 +28,85 @@ public class MessageBrokerImpl implements MessageBroker {
 	}
 
 	private MessageBrokerImpl() {
-
+		queues = new ConcurrentHashMap<>();
+		eventFutureMap = new ConcurrentHashMap<>();
+		eventSubscriberMap = new ConcurrentHashMap<>();
+		broadcastSubscriberMap = new ConcurrentHashMap<>();
+		index = new AtomicInteger(-1);
 	}
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, Subscriber m) {
-
+		if (eventSubscriberMap.get(type) == null) {
+			List<Subscriber> lst = new Vector<>();
+			lst.add(m);
+			eventSubscriberMap.put(type, lst);
+		}
+		else
+			eventSubscriberMap.get(type).add(m);
 	}
 
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, Subscriber m) {
-		// TODO Auto-generated method stub
-
+		if (broadcastSubscriberMap.get(type) == null) {
+			List<Subscriber> lst = new Vector<>();
+			lst.add(m);
+			broadcastSubscriberMap.put(type, lst);
+		}
+		else
+			broadcastSubscriberMap.get(type).add(m);
 	}
 
 	@Override
 	public <T> void complete(Event<T> e, T result) {
-		// TODO Auto-generated method stub
+		eventFutureMap.get(e).resolve(result);
 
 	}
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		// TODO Auto-generated method stub
-
+		if (broadcastSubscriberMap.get(b) != null)
+			broadcastSubscriberMap.get(b).forEach(subscriber -> queues.get(subscriber).add(b));
 	}
 
 	
 	@Override
 	public <T> Future<T> sendEvent(Event<T> e) {
-		// TODO Auto-generated method stub
-		return null;
+		Future result = new Future<T>();
+		eventFutureMap.put(e, result);
+		increaseIndex();
+		if (eventSubscriberMap.get(e) == null)
+			return null;
+		try {
+			queues.get(eventSubscriberMap.get(e).get(index.get() % eventSubscriberMap.get(e).size())).put(e);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	private void increaseIndex() {
+		int val;
+		do {
+			val = index.get();
+		} while (!index.compareAndSet(val, val + 1));
 	}
 
 	@Override
 	public void register(Subscriber m) {
-
+		queues.put(m, new PriorityBlockingQueue<Message>());
 	}
 
 	@Override
 	public void unregister(Subscriber m) {
-		// TODO Auto-generated method stub
-
+		queues.remove(m);
+		eventSubscriberMap.forEach((k, v) -> v.remove(m));
+		broadcastSubscriberMap.forEach((k, v) -> v.remove(m));
 	}
 
 	@Override
 	public Message awaitMessage(Subscriber m) throws InterruptedException {
-		// TODO Auto-generated method stub
-		return null;
+		return queues.get(m).take();
 	}
 
 	

@@ -18,10 +18,10 @@ import java.util.*;
  * <p>
  */
 public abstract class Subscriber extends RunnableSubPub {
+    private final Map<Class<? extends Event>, Callback> eventTypeMap;
+    private final Map<Class<? extends  Broadcast>, Callback> broadcastTypeMap;
     private boolean terminated = false;
-    private Map<Class<? extends Event<?>>, Callback<?>> eventTypeMap;
-    private Map<Class<? extends Broadcast>, Callback<?>> broadcastTypeMap;
-    MessageBroker broker;
+    private MessageBroker broker;
 
     /**
      * @param name the Subscriber name (used mainly for debugging purposes -
@@ -58,6 +58,7 @@ public abstract class Subscriber extends RunnableSubPub {
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
         eventTypeMap.put(type, callback);
+        broker.subscribeEvent(type, this);
     }
 
     /**
@@ -82,6 +83,7 @@ public abstract class Subscriber extends RunnableSubPub {
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
         broadcastTypeMap.put(type, callback);
+        broker.subscribeBroadcast(type, this);
     }
 
     /**
@@ -120,7 +122,10 @@ public abstract class Subscriber extends RunnableSubPub {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            if (eventTypeMap.containsKey(m.getClass()))
+                eventTypeMap.get(m.getClass()).call(m); // check about generics
+            else
+                broadcastTypeMap.get(m.getClass()).call(m);
         }
     }
 
