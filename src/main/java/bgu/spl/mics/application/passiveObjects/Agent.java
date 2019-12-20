@@ -9,7 +9,7 @@ package bgu.spl.mics.application.passiveObjects;
 public class Agent {
 	private String serialNumber;
 	private String name;
-	private boolean available=true;
+	private boolean available = true;
 
 	/**
 	 * Sets the serial number of an agent.
@@ -24,14 +24,14 @@ public class Agent {
      * @return The serial number of an agent.
      */
 	public String getSerialNumber() {
-		return  this.serialNumber;
+		return this.serialNumber;
 	}
 
 	/**
 	 * Sets the name of the agent.
 	 */
 	public void setName(String name) {
-		this.name=name;
+		this.name = name;
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class Agent {
      * @return the name of the agent.
      */
 	public String getName() {
-		return  this.name;
+		return this.name;
 	}
 
 	/**
