@@ -6,6 +6,7 @@ import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.MissionReceivedEvent;
 import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.MissionInfo;
+import bgu.spl.mics.application.passiveObjects.Report;
 
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +40,12 @@ public class Intelligence extends Subscriber {
 			public void call(TickBroadcast c) {
 				while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
 					MissionInfo mission = missions.get(0);
-					Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration());
+					Report report=new Report();
+					report.setAgentsSerialNumbers(mission.getSerialAgentsNumbers());
+					report.setMissionName(mission.getMissionName());
+					report.setGadgetName(mission.getGadget());
+					report.setTimeIssued(mission.getTimeIssued());
+					Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration(),report);
 					getSimplePublisher().sendEvent(event);
 					missions.remove(0);
 				}

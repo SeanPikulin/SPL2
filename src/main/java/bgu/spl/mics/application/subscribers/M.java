@@ -3,10 +3,7 @@ package bgu.spl.mics.application.subscribers;
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Future;
 import bgu.spl.mics.Subscriber;
-import bgu.spl.mics.application.messages.AgentAvailableEvent;
-import bgu.spl.mics.application.messages.GadgetAvailableEvent;
-import bgu.spl.mics.application.messages.MissionReceivedEvent;
-import bgu.spl.mics.application.messages.TickBroadcast;
+import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Agent;
 import bgu.spl.mics.application.passiveObjects.Diary;
 
@@ -20,12 +17,18 @@ import java.util.concurrent.TimeUnit;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class M extends Subscriber {
+	private int serialNumber;
 	private int currentTick;
 	private Diary diary;
 
-	public M() {
+	public M(int serialNumber) {
 		super("M");
 		diary = Diary.getInstance();
+		this.serialNumber=serialNumber;
+	}
+
+	public int getSerialNumber() {
+		return serialNumber;
 	}
 
 	@Override
@@ -35,11 +38,27 @@ public class M extends Subscriber {
 			@Override
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
-				Future<Boolean> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers()));
+				c.getReport().setM(serialNumber);
+				Future<Boolean> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport()));
 				boolean isAgentsExists = agentsFuture.get();
 				if (isAgentsExists) {
-					Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget()));
+					Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(),c.getReport()));
 					boolean isGadgetExists = gadgetFuture.get();
+					if(isGadgetExists){
+						if(c.getTimeExpired()>currentTick){
+							c.getReport().setTimeCreated(currentTick);
+							diary.addReport(c.getReport());
+							getSimplePublisher().sendEvent(new SendAgentsEvent(c.getSerialNumbers(),c.getDuration()));
+
+						}
+						else{
+							getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+						}
+
+					}
+					else{
+						getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+					}
 				}
 			}
 		});

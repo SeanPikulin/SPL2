@@ -1,8 +1,10 @@
 package bgu.spl.mics.application.subscribers;
 
+import bgu.spl.mics.Broadcast;
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.GadgetAvailableEvent;
+import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.Inventory;
 
 /**
@@ -13,6 +15,7 @@ import bgu.spl.mics.application.passiveObjects.Inventory;
  */
 public class Q extends Subscriber {
 	private Inventory inventory;
+	private int Qtick;
 
 	public Q() {
 		super("Q");
@@ -25,10 +28,16 @@ public class Q extends Subscriber {
 		subscribeEvent(GadgetAvailableEvent.class, new Callback<GadgetAvailableEvent>() {
 			@Override
 			public void call(GadgetAvailableEvent c) {
+				c.getReport().setQTime(Qtick);
 				complete(c, inventory.getItem(c.getGadget()));
 			}
 		});
-		
-	}
+		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
+			@Override
+			public void call(TickBroadcast c) {
+				Qtick = c.getTick();
+			}
+		});
 
+	}
 }

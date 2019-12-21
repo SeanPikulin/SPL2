@@ -1,6 +1,8 @@
 package bgu.spl.mics;
 
 
+import java.util.concurrent.TimeUnit;
+
 public class DummySubscriber extends Subscriber {
     private Future<Integer> future=new Future<>();
     MessageBroker m=MessageBrokerImpl.getInstance();
@@ -21,5 +23,5 @@ public class DummySubscriber extends Subscriber {
         return future;
     }
 
-    public Integer getResult() { return this.future.result; }
+    public Integer getResult() { return this.future.get(1, TimeUnit.MILLISECONDS); }
 }

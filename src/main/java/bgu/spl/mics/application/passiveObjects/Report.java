@@ -20,6 +20,10 @@ public class Report {
 	private int QTime;
 	private int timeCreated;
 
+	public Report() {
+
+	}
+
 	public Report(String missionName, int m, int moneypenny, List<String> agentsSerialNumbers, List<String> agentsNames, String gadgetName, int timeIssued, int QTime, int timeCreated) {
 		this.missionName = missionName;
 		M = m;
@@ -31,7 +35,6 @@ public class Report {
 		this.QTime = QTime;
 		this.timeCreated = timeCreated;
 	}
-
 
 	/**
      * Retrieves the mission name.
@@ -163,5 +166,20 @@ public class Report {
 	 */
 	public void setTimeCreated(int timeCreated) {
 		this.timeCreated=timeCreated;
+	}
+
+	@Override
+	public String toString() {
+		return "Report{" +
+				"missionName='" + missionName + '\'' +
+				", M=" + M +
+				", moneypenny=" + moneypenny +
+				", agentsSerialNumbers=" + agentsSerialNumbers +
+				", agentsNames=" + agentsNames +
+				", gadgetName='" + gadgetName + '\n' +
+				", timeIssued=" + timeIssued +
+				", QTime=" + QTime +
+				", timeCreated=" + timeCreated +
+				'}'+'\n' ;
 	}
 }

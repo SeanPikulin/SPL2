@@ -61,7 +61,7 @@ public class Diary {
 		for (Report report:this.reports) {
 			reports.add(report);
 		}
-		obj.put("List of Gadgets",reports);
+		obj.put("List of Reports",reports);
 		try {
 			FileWriter file=new FileWriter(filename);
 			file.write(obj.toJSONString());
