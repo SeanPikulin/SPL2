@@ -1,6 +1,14 @@
 package bgu.spl.mics.application.subscribers;
 
+import bgu.spl.mics.Callback;
+import bgu.spl.mics.Event;
 import bgu.spl.mics.Subscriber;
+import bgu.spl.mics.application.messages.MissionReceivedEvent;
+import bgu.spl.mics.application.messages.TickBroadcast;
+import bgu.spl.mics.application.passiveObjects.MissionInfo;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A Publisher\Subscriber.
@@ -10,14 +18,32 @@ import bgu.spl.mics.Subscriber;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class Intelligence extends Subscriber {
+	private List<MissionInfo> missions;
 
-	public Intelligence() {
-		super("Change_This_Name");
-		// TODO Implement this
+	public Intelligence(List<MissionInfo> missionInfos) {
+		super("Intelligence");
+		this.missions = missionInfos;
+		missions.sort(new Comparator<MissionInfo>() {
+			@Override
+			public int compare(MissionInfo missionInfo, MissionInfo t1) {
+				return missionInfo.getTimeIssued() - t1.getTimeIssued();
+			}
+		});
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO Implement this
+		getBroker().register(this);
+		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
+			@Override
+			public void call(TickBroadcast c) {
+				while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
+					MissionInfo mission = missions.get(0);
+					Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration());
+					getSimplePublisher().sendEvent(event);
+					missions.remove(0);
+				}
+			}
+		});
 	}
 }

@@ -2,48 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e825d3bf-0426-4c84-826b-15bc5afb0bee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/AgentAvailableEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/GadgetAvailableEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/MissionReceivedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/TickBroadcast.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Inventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/ExampleManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Broadcast.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Callback.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Future.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/MessageBroker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/MessageBrokerImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Publisher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/RunnableSubPub.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/SimplePublisher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/Subscriber.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/MI6Runner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/Agent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/Diary.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/Inventory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/MissionInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/Report.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/passiveObjects/Squad.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/publishers/Intelligence.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/publishers/TimeService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/subscribers/M.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/subscribers/Moneypenny.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/application/subscribers/Q.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/Creator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/ExampleManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/messages/ExampleBroadcast.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/messages/ExampleEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/publishers/ExampleMessageSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/subscribers/ExampleBroadcastSubscriber.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/mics/example/subscribers/ExampleEventHandlerSubscriber.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/bgu/spl/mics/FutureTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/bgu/spl/mics/InventoryTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/bgu/spl/mics/MessageBrokerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/bgu/spl/mics/SquadTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +139,9 @@
       <workItem from="1576856523050" duration="5210000" />
       <workItem from="1576863701075" duration="3825000" />
       <workItem from="1576872074445" duration="1190000" />
+      <workItem from="1576873305296" duration="69000" />
+      <workItem from="1576923996234" duration="6053000" />
+      <workItem from="1576930973517" duration="6628000" />
     </task>
     <task id="LOCAL-00001" summary="Subscriber started">
       <created>1576443185383</created>
@@ -181,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576867160368</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Structure fixed">
+      <created>1576873351739</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1576873351739</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,17 +174,22 @@
     <MESSAGE value="Subscriber started&quot;" />
     <MESSAGE value="Subscriber started" />
     <MESSAGE value="&quot;Needed changes from the site updated&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Needed changes from the site updated&quot;" />
+    <MESSAGE value="Structure fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Structure fixed" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="313" y="59" width="800" height="684" key="#Inspections" timestamp="1576927524489">
+      <screen x="70" y="27" width="1296" height="741" />
+    </state>
+    <state x="313" y="59" width="800" height="684" key="#Inspections/70.27.1296.741@70.27.1296.741" timestamp="1576927524489" />
     <state x="382" y="202" width="662" height="397" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576438574412">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
     <state x="382" y="202" width="662" height="397" key="#com.intellij.fileTypes.FileTypeChooser/70.27.1296.741@70.27.1296.741" timestamp="1576438574412" />
-    <state x="584" y="189" width="323" height="407" key="#com.intellij.ide.util.MemberChooser" timestamp="1576430078501">
+    <state x="584" y="189" width="333" height="407" key="#com.intellij.ide.util.MemberChooser" timestamp="1576935365354">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
-    <state x="584" y="189" width="323" height="407" key="#com.intellij.ide.util.MemberChooser/70.27.1296.741@70.27.1296.741" timestamp="1576430078501" />
+    <state x="584" y="189" width="333" height="407" key="#com.intellij.ide.util.MemberChooser/70.27.1296.741@70.27.1296.741" timestamp="1576935365354" />
     <state x="2681" y="236" width="374" height="582" key="#com.intellij.ide.util.MemberChooser/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576184005151" />
     <state x="803" y="257" width="374" height="599" key="#com.intellij.ide.util.MemberChooser/70.27.1850.1053@70.27.1850.1053" timestamp="1575823963464" />
     <state x="451" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576419234489">
@@ -212,10 +200,10 @@
       <screen x="70" y="27" width="1296" height="741" />
     </state>
     <state x="451" y="146" width="524" height="509" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/70.27.1296.741@70.27.1296.741" timestamp="1576440527443" />
-    <state x="374" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1576867160211">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1576873351453">
+      <screen x="70" y="27" width="1296" height="741" />
     </state>
-    <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2/70.27.1296.741@70.27.1296.741" timestamp="1576443184532" />
+    <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2/70.27.1296.741@70.27.1296.741" timestamp="1576873351453" />
     <state x="374" y="27" key="CommitChangelistDialog2/70.27.1850.1053@70.27.1850.1053" timestamp="1576867160211" />
     <state x="566" y="227" width="374" height="351" key="FileChooserDialogImpl" timestamp="1576872396700">
       <screen x="70" y="27" width="1296" height="741" />
@@ -262,15 +250,15 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="484" y="188" width="1022" height="737" key="SettingsEditor/70.27.1850.1053@70.27.1850.1053" timestamp="1575897590924" />
-    <state x="417" y="178" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576867165089">
-      <screen x="70" y="27" width="1850" height="1053" />
-    </state>
-    <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1296.741@70.27.1296.741" timestamp="1576443188179" />
-    <state x="417" y="178" key="Vcs.Push.Dialog.v2/70.27.1850.1053@70.27.1850.1053" timestamp="1576867165089" />
-    <state x="477" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1576873306329">
+    <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576873354219">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
-    <state x="477" y="276" key="com.intellij.ide.util.TipDialog/70.27.1296.741@70.27.1296.741" timestamp="1576873306329" />
+    <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1296.741@70.27.1296.741" timestamp="1576873354219" />
+    <state x="417" y="178" key="Vcs.Push.Dialog.v2/70.27.1850.1053@70.27.1850.1053" timestamp="1576867165089" />
+    <state x="477" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1576930975188">
+      <screen x="70" y="27" width="1296" height="741" />
+    </state>
+    <state x="477" y="276" key="com.intellij.ide.util.TipDialog/70.27.1296.741@70.27.1296.741" timestamp="1576930975188" />
     <state x="2523" y="363" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576325388684" />
     <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1576863920290" />
     <state x="486" y="317" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576443171589">

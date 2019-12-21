@@ -34,6 +34,10 @@ public abstract class Subscriber extends RunnableSubPub {
         broker = MessageBrokerImpl.getInstance();
     }
 
+    protected MessageBroker getBroker() {
+        return this.broker;
+    }
+
 
     /**
      * Subscribes to events of type {@code type} with the callback

@@ -1,6 +1,9 @@
 package bgu.spl.mics.application.subscribers;
 
+import bgu.spl.mics.Callback;
 import bgu.spl.mics.Subscriber;
+import bgu.spl.mics.application.messages.GadgetAvailableEvent;
+import bgu.spl.mics.application.passiveObjects.Inventory;
 
 /**
  * Q is the only Subscriber\Publisher that has access to the {@link bgu.spl.mics.application.passiveObjects.Inventory}.
@@ -9,15 +12,22 @@ import bgu.spl.mics.Subscriber;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class Q extends Subscriber {
+	private Inventory inventory;
 
 	public Q() {
-		super("Change_This_Name");
-		// TODO Implement this
+		super("Q");
+		inventory = Inventory.getInstance();
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO Implement this
+		getBroker().register(this);
+		subscribeEvent(GadgetAvailableEvent.class, new Callback<GadgetAvailableEvent>() {
+			@Override
+			public void call(GadgetAvailableEvent c) {
+				complete(c, inventory.getItem(c.getGadget()));
+			}
+		});
 		
 	}
 

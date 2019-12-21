@@ -37,7 +37,7 @@ public class Future<T> {
 					e.printStackTrace();
 				}
 			}
-			return  this.result;
+			return this.result;
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class Future<T> {
 			try {
 				unit.sleep(timeout);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				return this.result;
 			}
 			if(isDone)
 				return this.result;

@@ -52,7 +52,7 @@ public class Squad {
 	 */
 	public void sendAgents(List<String> serials, int time){
 		try {
-			Thread.sleep(time); // * 100 tell sean before
+			Thread.sleep(time * 100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

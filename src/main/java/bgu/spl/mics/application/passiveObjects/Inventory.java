@@ -61,7 +61,7 @@ public class Inventory {
 	 *
 	 * <p>
 	 * Prints to a file name @filename a serialized object List<String> which is a
-	 * list of all the of the gadgeds.
+	 * list of all the of the gadgets.
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){

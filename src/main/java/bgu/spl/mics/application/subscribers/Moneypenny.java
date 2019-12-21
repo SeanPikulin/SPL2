@@ -1,6 +1,9 @@
 package bgu.spl.mics.application.subscribers;
 
+import bgu.spl.mics.Callback;
 import bgu.spl.mics.Subscriber;
+import bgu.spl.mics.application.messages.AgentAvailableEvent;
+import bgu.spl.mics.application.passiveObjects.Squad;
 
 /**
  * Only this type of Subscriber can access the squad.
@@ -10,15 +13,22 @@ import bgu.spl.mics.Subscriber;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class Moneypenny extends Subscriber {
+	private Squad squad;
 
 	public Moneypenny() {
-		super("Change_This_Name");
-		// TODO Implement this
+		super("Moneypenny");
+		squad = Squad.getInstance();
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO Implement this
+		getBroker().register(this);
+		subscribeEvent(AgentAvailableEvent.class, new Callback<AgentAvailableEvent>() {
+			@Override
+			public void call(AgentAvailableEvent c) {
+				complete(c, squad.getAgents(c.getSerialNumbers()));
+			}
+		});
 		
 	}
 

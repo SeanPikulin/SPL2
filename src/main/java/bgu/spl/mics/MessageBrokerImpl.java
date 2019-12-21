@@ -66,7 +66,13 @@ public class MessageBrokerImpl implements MessageBroker {
 	@Override
 	public void sendBroadcast(Broadcast b) {
 		if (broadcastSubscriberMap.get(b) != null)
-			broadcastSubscriberMap.get(b).forEach(subscriber -> queues.get(subscriber).add(b));
+			broadcastSubscriberMap.get(b).forEach(subscriber -> {
+				try {
+					queues.get(subscriber).put(b);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			});
 	}
 
 	
