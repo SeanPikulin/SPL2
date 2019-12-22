@@ -37,24 +37,29 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, Subscriber m) {
-		if (eventSubscriberMap.get(type) == null) {
-			List<Subscriber> lst = new Vector<>();
-			lst.add(m);
-			eventSubscriberMap.put(type, lst);
+		synchronized (eventSubscriberMap) {
+			if (eventSubscriberMap.get(type) == null) {
+				List<Subscriber> lst = new Vector<>();
+				lst.add(m);
+				eventSubscriberMap.put(type, lst);
+			}
+			else
+				eventSubscriberMap.get(type).add(m);
 		}
-		else
-			eventSubscriberMap.get(type).add(m);
 	}
 
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, Subscriber m) {
-		if (broadcastSubscriberMap.get(type) == null) {
-			List<Subscriber> lst = new Vector<>();
-			lst.add(m);
-			broadcastSubscriberMap.put(type, lst);
+		synchronized (broadcastSubscriberMap) {
+			if (broadcastSubscriberMap.get(type) == null) {
+				List<Subscriber> lst = new Vector<>();
+				lst.add(m);
+				broadcastSubscriberMap.put(type, lst);
+			}
+			else {
+				broadcastSubscriberMap.get(type).add(m);
+			}
 		}
-		else
-			broadcastSubscriberMap.get(type).add(m);
 	}
 
 	@Override
@@ -65,14 +70,15 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		if (broadcastSubscriberMap.get(b) != null)
-			broadcastSubscriberMap.get(b).forEach(subscriber -> {
+		if (broadcastSubscriberMap.get(b.getClass()) != null) {
+			broadcastSubscriberMap.get(b.getClass()).forEach(subscriber -> {
 				try {
 					queues.get(subscriber).put(b);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			});
+		}
 	}
 
 	
@@ -81,10 +87,10 @@ public class MessageBrokerImpl implements MessageBroker {
 		Future result = new Future<T>();
 		eventFutureMap.put(e, result);
 		increaseIndex();
-		if (eventSubscriberMap.get(e) == null)
+		if (eventSubscriberMap.get(e.getClass()) == null)
 			return null;
 		try {
-			queues.get(eventSubscriberMap.get(e).get(index.get() % eventSubscriberMap.get(e).size())).put(e);
+			queues.get(eventSubscriberMap.get(e.getClass()).get(index.get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
@@ -100,7 +106,7 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void register(Subscriber m) {
-		queues.put(m, new PriorityBlockingQueue<Message>());
+		queues.put(m, new LinkedBlockingQueue<>());
 	}
 
 	@Override

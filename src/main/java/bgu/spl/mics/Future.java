@@ -45,9 +45,12 @@ public class Future<T> {
      * Resolves the result of this Future object.
      */
 	public void resolve (T result) {
-		isDone=true;
-		this.result=result;
-		notifyAll();
+		synchronized (this) {
+			System.out.println(result);
+			isDone=true;
+			this.result=result;
+			notifyAll();
+		}
 	}
 	
 	/**

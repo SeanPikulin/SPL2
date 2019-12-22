@@ -2,20 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e825d3bf-0426-4c84-826b-15bc5afb0bee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/ReleaseAgentsEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/SendAgentsEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Future.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/MI6Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/MI6Runner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/AgentAvailableEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/AgentAvailableEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/GadgetAvailableEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/GadgetAvailableEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/MissionReceivedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/messages/MissionReceivedEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Diary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Diary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummySubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bgu/spl/mics/DummySubscriber.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,9 +72,23 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.MI6Runner">
+    <configuration name="ExampleManager" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bgu.spl.mics.example.ExampleManager" />
+      <module name="MI6" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bgu.spl.mics.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MI6Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bgu.spl.mics.application.MI6Runner" />
       <module name="MI6" />
+      <option name="PROGRAM_PARAMETERS" value="inputFile.json inventoryOutputFile.json diaryOutputFile.json" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="bgu.spl.mics.application.*" />
@@ -94,9 +107,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.ExampleManager" />
+      <item itemvalue="Application.MI6Runner" />
+      <item itemvalue="JUnit.All in MI6" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MI6Runner" />
+        <item itemvalue="Application.ExampleManager" />
         <item itemvalue="JUnit.All in MI6" />
       </list>
     </recent_temporary>
@@ -141,7 +160,8 @@
       <workItem from="1576873305296" duration="69000" />
       <workItem from="1576923996234" duration="6053000" />
       <workItem from="1576930973517" duration="6628000" />
-      <workItem from="1576942393415" duration="4874000" />
+      <workItem from="1576942393415" duration="4942000" />
+      <workItem from="1577030541819" duration="14748000" />
     </task>
     <task id="LOCAL-00001" summary="Subscriber started">
       <created>1576443185383</created>
@@ -164,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576873351739</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="&quot;logic finished&quot;">
+      <created>1576947317103</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1576947317103</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,13 +202,18 @@
     <MESSAGE value="Subscriber started" />
     <MESSAGE value="&quot;Needed changes from the site updated&quot;" />
     <MESSAGE value="Structure fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Structure fixed" />
+    <MESSAGE value="&quot;logic finished&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;logic finished&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="313" y="59" width="800" height="684" key="#Inspections" timestamp="1576927524489">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
     <state x="313" y="59" width="800" height="684" key="#Inspections/70.27.1296.741@70.27.1296.741" timestamp="1576927524489" />
+    <state x="453" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577045517096">
+      <screen x="70" y="27" width="3770" height="1053" />
+    </state>
+    <state x="453" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/70.27.3770.1053@70.27.3770.1053" timestamp="1577045517096" />
     <state x="382" y="202" width="662" height="397" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576438574412">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
@@ -200,36 +232,40 @@
       <screen x="70" y="27" width="1296" height="741" />
     </state>
     <state x="451" y="146" width="524" height="509" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/70.27.1296.741@70.27.1296.741" timestamp="1576440527443" />
-    <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1576873351453">
-      <screen x="70" y="27" width="1296" height="741" />
+    <state x="374" y="27" width="860" height="819" key="CommitChangelistDialog2" timestamp="1576947316759">
+      <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="283" y="27" width="860" height="741" key="CommitChangelistDialog2/70.27.1296.741@70.27.1296.741" timestamp="1576873351453" />
-    <state x="374" y="27" key="CommitChangelistDialog2/70.27.1850.1053@70.27.1850.1053" timestamp="1576867160211" />
+    <state x="374" y="27" width="860" height="819" key="CommitChangelistDialog2/70.27.1850.1053@70.27.1850.1053" timestamp="1576947316759" />
     <state x="566" y="227" width="374" height="351" key="FileChooserDialogImpl" timestamp="1576872396700">
       <screen x="70" y="27" width="1296" height="741" />
     </state>
     <state x="566" y="227" width="374" height="351" key="FileChooserDialogImpl/70.27.1296.741@70.27.1296.741" timestamp="1576872396700" />
     <state x="778" y="311" width="447" height="498" key="FileChooserDialogImpl/70.27.1850.1053@70.27.1850.1053" timestamp="1576866552384" />
-    <state width="902" height="275" key="GridCell.Tab.0.bottom" timestamp="1576947217111">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state width="1804" height="275" key="GridCell.Tab.0.bottom" timestamp="1577045520498">
+      <screen x="70" y="27" width="3770" height="1053" />
     </state>
     <state width="1804" height="275" key="GridCell.Tab.0.bottom/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182186" />
-    <state width="902" height="275" key="GridCell.Tab.0.bottom/70.27.1850.1053@70.27.1850.1053" timestamp="1576947217111" />
-    <state width="902" height="275" key="GridCell.Tab.0.center" timestamp="1576947217110">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state width="1804" height="275" key="GridCell.Tab.0.bottom/70.27.1850.1053@70.27.1850.1053" timestamp="1577030677261" />
+    <state width="1804" height="275" key="GridCell.Tab.0.bottom/70.27.3770.1053@70.27.3770.1053" timestamp="1577045520498" />
+    <state width="1804" height="275" key="GridCell.Tab.0.center" timestamp="1577045520497">
+      <screen x="70" y="27" width="3770" height="1053" />
     </state>
     <state width="1804" height="275" key="GridCell.Tab.0.center/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
-    <state width="902" height="275" key="GridCell.Tab.0.center/70.27.1850.1053@70.27.1850.1053" timestamp="1576947217110" />
-    <state width="902" height="275" key="GridCell.Tab.0.left" timestamp="1576947217104">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state width="1804" height="275" key="GridCell.Tab.0.center/70.27.1850.1053@70.27.1850.1053" timestamp="1577030677260" />
+    <state width="1804" height="275" key="GridCell.Tab.0.center/70.27.3770.1053@70.27.3770.1053" timestamp="1577045520497" />
+    <state width="1804" height="275" key="GridCell.Tab.0.left" timestamp="1577045520497">
+      <screen x="70" y="27" width="3770" height="1053" />
     </state>
     <state width="1804" height="275" key="GridCell.Tab.0.left/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
-    <state width="902" height="275" key="GridCell.Tab.0.left/70.27.1850.1053@70.27.1850.1053" timestamp="1576947217104" />
-    <state width="902" height="275" key="GridCell.Tab.0.right" timestamp="1576947217110">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state width="1804" height="275" key="GridCell.Tab.0.left/70.27.1850.1053@70.27.1850.1053" timestamp="1577030677259" />
+    <state width="1804" height="275" key="GridCell.Tab.0.left/70.27.3770.1053@70.27.3770.1053" timestamp="1577045520497" />
+    <state width="1804" height="275" key="GridCell.Tab.0.right" timestamp="1577045520498">
+      <screen x="70" y="27" width="3770" height="1053" />
     </state>
     <state width="1804" height="275" key="GridCell.Tab.0.right/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
-    <state width="902" height="275" key="GridCell.Tab.0.right/70.27.1850.1053@70.27.1850.1053" timestamp="1576947217110" />
+    <state width="1804" height="275" key="GridCell.Tab.0.right/70.27.1850.1053@70.27.1850.1053" timestamp="1577030677260" />
+    <state width="1804" height="275" key="GridCell.Tab.0.right/70.27.3770.1053@70.27.3770.1053" timestamp="1577045520498" />
     <state width="1804" height="340" key="GridCell.Tab.1.bottom" timestamp="1576336857172">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
@@ -250,17 +286,17 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="484" y="188" width="1022" height="737" key="SettingsEditor/70.27.1850.1053@70.27.1850.1053" timestamp="1575897590924" />
-    <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576873354219">
-      <screen x="70" y="27" width="1296" height="741" />
+    <state x="417" y="178" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576947320726">
+      <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1296.741@70.27.1296.741" timestamp="1576873354219" />
-    <state x="417" y="178" key="Vcs.Push.Dialog.v2/70.27.1850.1053@70.27.1850.1053" timestamp="1576867165089" />
-    <state x="651" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1576942396031">
+    <state x="417" y="178" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1850.1053@70.27.1850.1053" timestamp="1576947320726" />
+    <state x="651" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1577030541847">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="477" y="276" key="com.intellij.ide.util.TipDialog/70.27.1296.741@70.27.1296.741" timestamp="1576930975188" />
     <state x="2523" y="363" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576325388684" />
-    <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1576942396031" />
+    <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1577030541847" />
     <state x="486" y="317" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576443171589">
       <screen x="70" y="27" width="1296" height="741" />
     </state>

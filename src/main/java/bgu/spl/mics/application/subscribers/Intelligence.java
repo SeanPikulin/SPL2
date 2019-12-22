@@ -21,8 +21,8 @@ import java.util.List;
 public class Intelligence extends Subscriber {
 	private List<MissionInfo> missions;
 
-	public Intelligence(List<MissionInfo> missionInfos) {
-		super("Intelligence");
+	public Intelligence(List<MissionInfo> missionInfos,int timeToTerminate) {
+		super("Intelligence",timeToTerminate);
 		this.missions = missionInfos;
 		missions.sort(new Comparator<MissionInfo>() {
 			@Override
@@ -38,16 +38,21 @@ public class Intelligence extends Subscriber {
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
 			public void call(TickBroadcast c) {
-				while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
-					MissionInfo mission = missions.get(0);
-					Report report=new Report();
-					report.setAgentsSerialNumbers(mission.getSerialAgentsNumbers());
-					report.setMissionName(mission.getMissionName());
-					report.setGadgetName(mission.getGadget());
-					report.setTimeIssued(mission.getTimeIssued());
-					Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration(),report);
-					getSimplePublisher().sendEvent(event);
-					missions.remove(0);
+				if (c.getTick() == getTimeToTerminate()) {
+					terminate();
+				} else {
+
+					while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
+						MissionInfo mission = missions.get(0);
+						Report report = new Report();
+						report.setAgentsSerialNumbers(mission.getSerialAgentsNumbers());
+						report.setMissionName(mission.getMissionName());
+						report.setGadgetName(mission.getGadget());
+						report.setTimeIssued(mission.getTimeIssued());
+						Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration(), report);
+						getSimplePublisher().sendEvent(event);
+						missions.remove(0);
+					}
 				}
 			}
 		});

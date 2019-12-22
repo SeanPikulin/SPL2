@@ -5,6 +5,7 @@ import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.AgentAvailableEvent;
 import bgu.spl.mics.application.messages.ReleaseAgentsEvent;
 import bgu.spl.mics.application.messages.SendAgentsEvent;
+import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.Report;
 import bgu.spl.mics.application.passiveObjects.Squad;
 
@@ -19,8 +20,8 @@ public class Moneypenny extends Subscriber {
 	private int serialNumber;
 	private Squad squad;
 
-	public Moneypenny(int serialNumber) {
-		super("Moneypenny");
+	public Moneypenny(int serialNumber,int timeToTerminate) {
+		super("Moneypenny",timeToTerminate);
 		squad = Squad.getInstance();
 		this.serialNumber=serialNumber;
 	}
@@ -49,6 +50,13 @@ public class Moneypenny extends Subscriber {
 			@Override
 			public void call(ReleaseAgentsEvent c) {
 				squad.releaseAgents(c.getSerialNumbers());
+			}
+		});
+		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
+			@Override
+			public void call(TickBroadcast c) {
+				if(c.getTick()==getTimeToTerminate())
+					terminate();
 			}
 		});
 		

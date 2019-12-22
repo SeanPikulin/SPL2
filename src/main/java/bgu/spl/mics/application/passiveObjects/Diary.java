@@ -59,9 +59,20 @@ public class Diary {
 		JSONObject obj=new JSONObject();
 		JSONArray reports=new JSONArray();
 		for (Report report:this.reports) {
-			reports.add(report);
+			JSONObject JsonReport = new JSONObject();
+			JsonReport.put("missionName",report.getMissionName());
+			JsonReport.put("m",report.getM());
+			JsonReport.put("moneypenny",report.getMoneypenny());
+			JsonReport.put("agentsSerialNumbers",report.getAgentsSerialNumbers());
+			JsonReport.put("agentNames",report.getAgentsNames());
+			JsonReport.put("gadgetName",report.getGadgetName());
+			JsonReport.put("timeCreated",report.getTimeCreated());
+			JsonReport.put("timeIssued",report.getTimeIssued());
+			JsonReport.put("qTime",report.getQTime());
+			reports.add(JsonReport);
 		}
-		obj.put("List of Reports",reports);
+		obj.put("reports",reports);
+		obj.put("total", total);
 		try {
 			FileWriter file=new FileWriter(filename);
 			file.write(obj.toJSONString());

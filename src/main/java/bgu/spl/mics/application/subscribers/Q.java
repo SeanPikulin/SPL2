@@ -17,8 +17,8 @@ public class Q extends Subscriber {
 	private Inventory inventory;
 	private int Qtick;
 
-	public Q() {
-		super("Q");
+	public Q(int timeToTerminate) {
+		super("Q",timeToTerminate);
 		inventory = Inventory.getInstance();
 	}
 
@@ -36,6 +36,8 @@ public class Q extends Subscriber {
 			@Override
 			public void call(TickBroadcast c) {
 				Qtick = c.getTick();
+				if(c.getTick()==getTimeToTerminate())
+					terminate();
 			}
 		});
 

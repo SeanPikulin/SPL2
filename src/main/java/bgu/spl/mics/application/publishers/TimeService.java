@@ -21,7 +21,7 @@ public class TimeService extends Publisher {
 	public TimeService(int duration) {
 		super("Time_Service");
 		this.duration = duration;
-		counter = 0;
+		counter = 1;
 	}
 
 
@@ -42,7 +42,7 @@ public class TimeService extends Publisher {
 				e.printStackTrace();
 			}
 			counter++;
-			if (counter == duration)
+			if (counter == duration + 1)
 				terminated = true;
 		}
 	}

@@ -21,14 +21,18 @@ public class M extends Subscriber {
 	private int currentTick;
 	private Diary diary;
 
-	public M(int serialNumber) {
-		super("M");
+	public M(int serialNumber,int timeToTerminate) {
+		super("M",timeToTerminate);
 		diary = Diary.getInstance();
 		this.serialNumber=serialNumber;
 	}
 
 	public int getSerialNumber() {
 		return serialNumber;
+	}
+
+	public Diary getDiary() {
+		return diary;
 	}
 
 	@Override
@@ -66,6 +70,8 @@ public class M extends Subscriber {
 			@Override
 			public void call(TickBroadcast c) {
 				currentTick = c.getTick();
+				if(c.getTick()==getTimeToTerminate())
+					terminate();
 			}
 		});
 	}

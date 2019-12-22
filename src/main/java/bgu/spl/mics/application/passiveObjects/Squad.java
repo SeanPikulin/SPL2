@@ -40,10 +40,12 @@ public class Squad {
 	 * Releases agents.
 	 */
 	public void releaseAgents(List<String> serials){
-		for (String serialNumber:serials) {
-			this.agents.get(serialNumber).release();
+		synchronized (this) {
+			for (String serialNumber:serials) {
+				this.agents.get(serialNumber).release();
+			}
+			notifyAll();
 		}
-		notifyAll();
 	}
 
 	/**

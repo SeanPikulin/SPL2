@@ -167,19 +167,4 @@ public class Report {
 	public void setTimeCreated(int timeCreated) {
 		this.timeCreated=timeCreated;
 	}
-
-	@Override
-	public String toString() {
-		return "Report{" +
-				"missionName='" + missionName + '\'' +
-				", M=" + M +
-				", moneypenny=" + moneypenny +
-				", agentsSerialNumbers=" + agentsSerialNumbers +
-				", agentsNames=" + agentsNames +
-				", gadgetName='" + gadgetName + '\n' +
-				", timeIssued=" + timeIssued +
-				", QTime=" + QTime +
-				", timeCreated=" + timeCreated +
-				'}'+'\n' ;
-	}
 }
