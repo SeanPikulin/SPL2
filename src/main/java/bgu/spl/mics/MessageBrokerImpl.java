@@ -15,7 +15,7 @@ public class MessageBrokerImpl implements MessageBroker {
 	private Map<Event, Future> eventFutureMap;
 	private Map<Class<? extends Event>, List<Subscriber>> eventSubscriberMap;
 	private Map<Class<? extends Broadcast>, List<Subscriber>> broadcastSubscriberMap;
-	private AtomicInteger index;
+	private Map<Class<? extends Event>, AtomicInteger> eventIndexMap;
 	private static class InstanceHolder {
 		private static MessageBroker instance = new MessageBrokerImpl();
 	}
@@ -32,7 +32,7 @@ public class MessageBrokerImpl implements MessageBroker {
 		eventFutureMap = new ConcurrentHashMap<>();
 		eventSubscriberMap = new ConcurrentHashMap<>();
 		broadcastSubscriberMap = new ConcurrentHashMap<>();
-		index = new AtomicInteger(-1);
+		eventIndexMap = new ConcurrentHashMap<>();
 	}
 
 	@Override
@@ -86,18 +86,25 @@ public class MessageBrokerImpl implements MessageBroker {
 	public <T> Future<T> sendEvent(Event<T> e) {
 		Future result = new Future<T>();
 		eventFutureMap.put(e, result);
-		increaseIndex();
-		if (eventSubscriberMap.get(e.getClass()) == null)
-			return null;
-		try {
-			queues.get(eventSubscriberMap.get(e.getClass()).get(index.get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
+		if (eventIndexMap.get(e.getClass()) == null)
+			eventIndexMap.put(e.getClass(), new AtomicInteger(0));
+		synchronized (eventIndexMap) {
+			increaseIndex(eventIndexMap.get(e.getClass()));
+			if (eventSubscriberMap.get(e.getClass()) == null || eventSubscriberMap.get(e.getClass()).size() == 0) {
+				System.out.println("im here");
+				return null;
+			}
+			try {
+				System.out.println("subscriber = " + eventIndexMap.get(e.getClass()).get());
+				queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
 		}
 		return result;
 	}
 
-	private void increaseIndex() {
+	private void increaseIndex(AtomicInteger index) {
 		int val;
 		do {
 			val = index.get();

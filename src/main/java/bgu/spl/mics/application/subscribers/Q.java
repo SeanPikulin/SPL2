@@ -4,6 +4,7 @@ import bgu.spl.mics.Broadcast;
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.GadgetAvailableEvent;
+import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.Inventory;
 
@@ -17,8 +18,8 @@ public class Q extends Subscriber {
 	private Inventory inventory;
 	private int Qtick;
 
-	public Q(int timeToTerminate) {
-		super("Q",timeToTerminate);
+	public Q() {
+		super("Q");
 		inventory = Inventory.getInstance();
 	}
 
@@ -36,10 +37,13 @@ public class Q extends Subscriber {
 			@Override
 			public void call(TickBroadcast c) {
 				Qtick = c.getTick();
-				if(c.getTick()==getTimeToTerminate())
-					terminate();
 			}
 		});
-
+		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
+			@Override
+			public void call(TerminateBroadcast c) {
+				terminate();
+			}
+		});
 	}
 }

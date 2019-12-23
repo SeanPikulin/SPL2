@@ -6,6 +6,7 @@ import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Agent;
 import bgu.spl.mics.application.passiveObjects.Diary;
+import bgu.spl.mics.application.passiveObjects.Report;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,8 +22,8 @@ public class M extends Subscriber {
 	private int currentTick;
 	private Diary diary;
 
-	public M(int serialNumber,int timeToTerminate) {
-		super("M",timeToTerminate);
+	public M(int serialNumber) {
+		super("M");
 		diary = Diary.getInstance();
 		this.serialNumber=serialNumber;
 	}
@@ -42,26 +43,34 @@ public class M extends Subscriber {
 			@Override
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
-				c.getReport().setM(serialNumber);
+				Report report = c.getReport();
+				report.setM(serialNumber);
+				System.out.println("M = " + serialNumber);
+
 				Future<Boolean> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport()));
-				boolean isAgentsExists = agentsFuture.get();
-				if (isAgentsExists) {
-					Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(),c.getReport()));
-					boolean isGadgetExists = gadgetFuture.get();
-					if(isGadgetExists){
-						if(c.getTimeExpired()>currentTick){
-							c.getReport().setTimeCreated(currentTick);
-							diary.addReport(c.getReport());
-							getSimplePublisher().sendEvent(new SendAgentsEvent(c.getSerialNumbers(),c.getDuration()));
+				if(agentsFuture!=null) {
+					boolean isAgentsExists = agentsFuture.get();
+					if (isAgentsExists) {
+						Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(), c.getReport()));
+						if (gadgetFuture != null) {
+							boolean isGadgetExists = gadgetFuture.get();
+							if (isGadgetExists) {
+								if (c.getTimeExpired() > c.getReport().getQTime()) {
+									c.getReport().setTimeCreated(currentTick);
+									diary.addReport(c.getReport());
+									System.out.println(c.getMissionName() + " sent");
+									getSimplePublisher().sendEvent(new SendAgentsEvent(c.getSerialNumbers(), c.getDuration()));
 
-						}
-						else{
-							getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
-						}
+								} else {
+									System.out.println(c.getMissionName() + " wasnt sent");
+									getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+								}
 
-					}
-					else{
-						getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+							} else {
+								System.out.println(c.getMissionName() + " wasnt sent");
+								getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+							}
+						}
 					}
 				}
 			}
@@ -70,8 +79,12 @@ public class M extends Subscriber {
 			@Override
 			public void call(TickBroadcast c) {
 				currentTick = c.getTick();
-				if(c.getTick()==getTimeToTerminate())
-					terminate();
+			}
+		});
+		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
+			@Override
+			public void call(TerminateBroadcast c) {
+				terminate();
 			}
 		});
 	}

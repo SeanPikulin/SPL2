@@ -2,6 +2,7 @@ package bgu.spl.mics.application.publishers;
 
 import bgu.spl.mics.Broadcast;
 import bgu.spl.mics.Publisher;
+import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.messages.TickBroadcast;
 
 /**
@@ -42,8 +43,10 @@ public class TimeService extends Publisher {
 				e.printStackTrace();
 			}
 			counter++;
-			if (counter == duration + 1)
+			if (counter == duration + 1) {
 				terminated = true;
+				getSimplePublisher().sendBroadcast(new TerminateBroadcast());
+			}
 		}
 	}
 

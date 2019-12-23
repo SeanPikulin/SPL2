@@ -1,10 +1,12 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
+import com.google.gson.*;
 import org.json.simple.*;
 /**
  *  That's where Q holds his gadget (e.g. an explosive pen was used in GoldenEye, a geiger counter in Dr. No, etc).
@@ -65,18 +67,15 @@ public class Inventory {
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		JSONObject obj=new JSONObject();
-		JSONArray gadgets=new JSONArray();
-		for (String gadget:this.gadgets) {
-			gadgets.add(gadget);
-		}
-		obj.put("List of Gadgets",gadgets);
+		Gson g=new GsonBuilder().setPrettyPrinting().create();
 		try {
-			FileWriter file=new FileWriter(filename);
-			file.write(obj.toJSONString());
-			file.close();
+			FileWriter writer=new FileWriter(filename);
+			g.toJson(this,writer);
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+
 	}
 }

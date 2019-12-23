@@ -24,28 +24,6 @@ import java.util.Vector;
  */
 public class MI6Runner {
     public static void main(String[] args) {
-//        Diary i=Diary.getInstance();
-//        List<String> agentsNumbers1=new Vector<>();
-//        agentsNumbers1.add("001");
-//        agentsNumbers1.add("007");
-//        List<String> agentNames1=new Vector<>();
-//        agentNames1.add("Sean");
-//        agentNames1.add("ItayNeria.");
-//
-//        List<String> agentsNumbers2=new Vector<>();
-//        agentsNumbers2.add("003");
-//        agentsNumbers2.add("002");
-//        List<String> agentNames2=new Vector<>();
-//        agentNames2.add("Benny");
-//        agentNames2.add("Adler");
-//
-//        Report report1=new Report("InonEzraton",1,2,agentsNumbers1,agentNames1,"VisualNovel",10,7,12);
-//        Report report2=new Report("OriKingBidiuk",3,4,agentsNumbers2,agentNames2,"AmartiLahem",12,3,13);
-//        i.addReport(report1);
-//        i.addReport(report2);
-//        i.incrementTotal();
-//        i.incrementTotal();
-//        i.printToFile("../Diary.json");
         Inventory inventory=Inventory.getInstance();
         Squad squad=Squad.getInstance();
         List<Thread> threads=new Vector<>();
@@ -70,14 +48,14 @@ public class MI6Runner {
             JSONObject services=(JSONObject)obj.get("services");
             M[] MArray=new M[(int)(long)services.get("M")];
             for(int i=0;i<MArray.length;i++){
-                MArray[i]=new M(i,(int)(long)services.get("time"));
+                MArray[i]=new M(i+1);
                 Thread thread=new Thread(MArray[i]);
                 threads.add(thread);
                 thread.start();
             }
             Moneypenny[] moneypennies=new Moneypenny[(int)(long)services.get("Moneypenny")];
             for(int i=0;i<moneypennies.length;i++){
-                moneypennies[i]=new Moneypenny(i,(int)(long)services.get("time"));
+                moneypennies[i]=new Moneypenny(i+1);
                 Thread thread=new Thread(moneypennies[i]);
                 threads.add(thread);
                 thread.start();
@@ -103,13 +81,13 @@ public class MI6Runner {
                     MissionInfo missionInfo=new MissionInfo(name,serialAgentsNumbers,gadget,timeIssued,timeExpired,duration);
                     missionInfos.add(missionInfo);
                 }
-                Intelligence intelligence =new Intelligence(missionInfos,(int)(long)services.get("time"));
+                Intelligence intelligence =new Intelligence(missionInfos);
                 intelligences[i] = intelligence;
                 Thread thread=new Thread(intelligences[i]);
                 threads.add(thread);
                 thread.start();
             }
-            Q q=new Q((int)(long) services.get("time"));
+            Q q=new Q();
             Thread thread=new Thread(q);
             threads.add(thread);
             thread.start();

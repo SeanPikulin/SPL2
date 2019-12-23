@@ -46,7 +46,6 @@ public class Future<T> {
      */
 	public void resolve (T result) {
 		synchronized (this) {
-			System.out.println(result);
 			isDone=true;
 			this.result=result;
 			notifyAll();

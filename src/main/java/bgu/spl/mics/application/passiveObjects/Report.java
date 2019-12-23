@@ -61,7 +61,7 @@ public class Report {
 	 * Sets the M's id.
 	 */
 	public void setM(int m) {
-		this.M=M;
+		this.M=m;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Report {
 	 * Sets the time-tick in which Q Received the GadgetAvailableEvent for that mission.
 	 */
 	public void setQTime(int qTime) {
-		this.QTime= QTime;
+		this.QTime= qTime;
 	}
 
 	/**

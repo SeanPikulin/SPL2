@@ -10,6 +10,7 @@ import java.util.*;
 public class Squad {
 
 	private Map<String, Agent> agents;
+
 	private static class InstanceHolder {
 		private static Squad instance=new Squad();
 	}

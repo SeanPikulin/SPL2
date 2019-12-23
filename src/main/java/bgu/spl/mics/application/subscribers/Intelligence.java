@@ -4,6 +4,7 @@ import bgu.spl.mics.Callback;
 import bgu.spl.mics.Event;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.MissionReceivedEvent;
+import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.messages.TickBroadcast;
 import bgu.spl.mics.application.passiveObjects.MissionInfo;
 import bgu.spl.mics.application.passiveObjects.Report;
@@ -21,8 +22,8 @@ import java.util.List;
 public class Intelligence extends Subscriber {
 	private List<MissionInfo> missions;
 
-	public Intelligence(List<MissionInfo> missionInfos,int timeToTerminate) {
-		super("Intelligence",timeToTerminate);
+	public Intelligence(List<MissionInfo> missionInfos) {
+		super("Intelligence");
 		this.missions = missionInfos;
 		missions.sort(new Comparator<MissionInfo>() {
 			@Override
@@ -38,10 +39,6 @@ public class Intelligence extends Subscriber {
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
 			public void call(TickBroadcast c) {
-				if (c.getTick() == getTimeToTerminate()) {
-					terminate();
-				} else {
-
 					while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
 						MissionInfo mission = missions.get(0);
 						Report report = new Report();
@@ -54,6 +51,11 @@ public class Intelligence extends Subscriber {
 						missions.remove(0);
 					}
 				}
+		});
+		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
+			@Override
+			public void call(TerminateBroadcast c) {
+				terminate();
 			}
 		});
 	}

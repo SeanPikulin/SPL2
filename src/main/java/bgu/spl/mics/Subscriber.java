@@ -22,29 +22,17 @@ public abstract class Subscriber extends RunnableSubPub {
     private final Map<Class<? extends  Broadcast>, Callback> broadcastTypeMap;
     private boolean terminated = false;
     private MessageBroker broker;
-    private int timeToTerminate;
 
     /**
      * @param name the Subscriber name (used mainly for debugging purposes -
      *             does not have to be unique)
      */
-    public Subscriber(String name,int timeToTerminate) {
-        super(name);
-        eventTypeMap = new HashMap<>();
-        broadcastTypeMap = new HashMap<>();
-        broker = MessageBrokerImpl.getInstance();
-        this.timeToTerminate=timeToTerminate;
-    }
 
     public Subscriber(String name) {
         super(name);
         eventTypeMap = new HashMap<>();
         broadcastTypeMap = new HashMap<>();
         broker = MessageBrokerImpl.getInstance();
-    }
-
-    protected int getTimeToTerminate() {
-        return timeToTerminate;
     }
 
     protected MessageBroker getBroker() {

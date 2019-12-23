@@ -1,5 +1,7 @@
 package bgu.spl.mics.application.passiveObjects;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -56,27 +58,11 @@ public class Diary {
 	 * This method is called by the main method in order to generate the output.
 	 */
 	public void printToFile(String filename){
-		JSONObject obj=new JSONObject();
-		JSONArray reports=new JSONArray();
-		for (Report report:this.reports) {
-			JSONObject JsonReport = new JSONObject();
-			JsonReport.put("missionName",report.getMissionName());
-			JsonReport.put("m",report.getM());
-			JsonReport.put("moneypenny",report.getMoneypenny());
-			JsonReport.put("agentsSerialNumbers",report.getAgentsSerialNumbers());
-			JsonReport.put("agentNames",report.getAgentsNames());
-			JsonReport.put("gadgetName",report.getGadgetName());
-			JsonReport.put("timeCreated",report.getTimeCreated());
-			JsonReport.put("timeIssued",report.getTimeIssued());
-			JsonReport.put("qTime",report.getQTime());
-			reports.add(JsonReport);
-		}
-		obj.put("reports",reports);
-		obj.put("total", total);
+		Gson g=new GsonBuilder().setPrettyPrinting().create();
 		try {
-			FileWriter file=new FileWriter(filename);
-			file.write(obj.toJSONString());
-			file.close();
+			FileWriter writer=new FileWriter(filename);
+			g.toJson(this,writer);
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
