@@ -11,7 +11,7 @@ public class Squad {
 
 	private Map<String, Agent> agents;
 
-	private static class InstanceHolder {
+	private static class InstanceHolder { // a class for thread-safe singleton
 		private static Squad instance=new Squad();
 	}
 
@@ -41,7 +41,7 @@ public class Squad {
 	 * Releases agents.
 	 */
 	public void releaseAgents(List<String> serials){
-		synchronized (this) {
+		synchronized (this) { // to avoid a situation where one thread tries to acquire and another thread is trying to release
 			for (String serialNumber:serials) {
 				this.agents.get(serialNumber).release();
 			}
@@ -73,7 +73,7 @@ public class Squad {
 			if(!this.agents.containsKey(serials.get(i)))
 				return false;
 		}
-		synchronized (this) {
+		synchronized (this) { // to avoid a situation where agents can be acquired for more them one mission at a time
 			while (!allNotAcquired(serials)) {
 				try {
 					wait();

@@ -35,20 +35,21 @@ public class Intelligence extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		getBroker().register(this);
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
 			public void call(TickBroadcast c) {
+				// while there are available missions and the closest mission's time has exceeded
 					while (missions.size() != 0 && missions.get(0).getTimeIssued() <= c.getTick()) {
 						MissionInfo mission = missions.get(0);
 						Report report = new Report();
+						// update the report with his information
 						report.setAgentsSerialNumbers(mission.getSerialAgentsNumbers());
 						report.setMissionName(mission.getMissionName());
 						report.setGadgetName(mission.getGadget());
 						report.setTimeIssued(mission.getTimeIssued());
 						Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration(), report);
 						getSimplePublisher().sendEvent(event);
-						missions.remove(0);
+						missions.remove(0); // the mission sent, therefore we remove it
 					}
 				}
 		});

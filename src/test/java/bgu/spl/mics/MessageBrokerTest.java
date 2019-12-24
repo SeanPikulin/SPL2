@@ -25,10 +25,7 @@ public class MessageBrokerTest {
                 m.subscribeBroadcast(broadcast.getClass(),s1);
             }
         };
-
-
     }
-
 
     @Test
     public void testGetInstance(){
@@ -38,6 +35,7 @@ public class MessageBrokerTest {
 
     @Test
     public void testSubscribeEvent(){
+        s1.initialize();
         s1.sendEvent(event);//this function calls the m.sendEvent
         try {
             m.awaitMessage(s1);
@@ -50,7 +48,8 @@ public class MessageBrokerTest {
 
     @Test
     public void testAwaitMessage(){
-        m.sendEvent(event);
+        s1.initialize();
+        s1.sendEvent(event);
         Message p= null;
         try {
             p = m.awaitMessage(s1);
@@ -71,6 +70,7 @@ public class MessageBrokerTest {
 
     @Test
     public void testSubscribeBroadcast(){
+        s1.initialize();
         m.sendBroadcast(broadcast);
         Message b= null;
         try {
@@ -83,6 +83,7 @@ public class MessageBrokerTest {
 
     @Test
     public void testSendEvent() {
+        s1.initialize();
         Future<Integer> future = m.sendEvent(event);
         assertNotNull(future);
         m.complete(event, 42);
@@ -91,6 +92,7 @@ public class MessageBrokerTest {
 
     @Test
     public void testSendBroadcast() {
+        s1.initialize();
         m.sendBroadcast(broadcast);
         Message b= null;
         try {
@@ -103,6 +105,7 @@ public class MessageBrokerTest {
 
     @Test
     public void testComplete() {
+        s1.initialize();
         Future<Integer> future = m.sendEvent(event);
         m.complete(event, 42);
         assertTrue(future.isDone());

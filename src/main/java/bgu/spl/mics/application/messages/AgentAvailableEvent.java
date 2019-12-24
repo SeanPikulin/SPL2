@@ -6,6 +6,9 @@ import bgu.spl.mics.application.passiveObjects.Report;
 
 import java.util.List;
 
+/**
+ * An event representing the availability checking of an agents given as parameters
+ */
 public class AgentAvailableEvent implements Event<Boolean> {
     private List<String> serialNumbers;
     private Report report;

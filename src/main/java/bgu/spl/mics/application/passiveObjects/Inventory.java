@@ -16,16 +16,16 @@ import org.json.simple.*;
  * <p>
  * You can add ONLY private fields and methods to this class as you see fit.
  */
-public class Inventory {
+public class Inventory { // Although Inventory can be accessed by several threads, there is only one Q instance
 	private List<String> gadgets=new Vector<>();
-	private static class InstanceHolder {
-		private static Inventory instance=new Inventory();
-	}
+	private static Inventory instance;
 	/**
      * Retrieves the single instance of this class.
      */
 	public static Inventory getInstance() {
-		return InstanceHolder.instance;
+		if (instance == null)
+			instance = new Inventory();
+		return instance;
 	}
 
 	/**

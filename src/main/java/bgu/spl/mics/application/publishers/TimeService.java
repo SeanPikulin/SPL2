@@ -35,15 +35,15 @@ public class TimeService extends Publisher {
 	public void run() { // check Timer
 		initialize();
 		while (!terminated) {
-			Broadcast broadcast = new TickBroadcast(counter);
+			Broadcast broadcast = new TickBroadcast(counter); // sends the current tick to all the relevant subscribers
 			getSimplePublisher().sendBroadcast(broadcast);
 			try {
-				Thread.sleep(100);
+				Thread.sleep(100); // tick is defined as 100 ms
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			counter++;
-			if (counter == duration + 1) {
+			if (counter == duration + 1) { // if the the termination time has exceeded, tell all the subscribers to terminate
 				terminated = true;
 				getSimplePublisher().sendBroadcast(new TerminateBroadcast());
 			}

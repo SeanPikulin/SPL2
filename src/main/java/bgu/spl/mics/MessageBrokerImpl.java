@@ -12,10 +12,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MessageBrokerImpl implements MessageBroker {
 
 	private Map<Subscriber, BlockingQueue<Message>> queues;
-	private Map<Event, Future> eventFutureMap;
-	private Map<Class<? extends Event>, List<Subscriber>> eventSubscriberMap;
-	private Map<Class<? extends Broadcast>, List<Subscriber>> broadcastSubscriberMap;
-	private Map<Class<? extends Event>, AtomicInteger> eventIndexMap;
+	private final Map<Event, Future> eventFutureMap;
+	private final Map<Class<? extends Event>, List<Subscriber>> eventSubscriberMap;
+	private final Map<Class<? extends Broadcast>, List<Subscriber>> broadcastSubscriberMap;
+	private final Map<Class<? extends Event>, AtomicInteger> eventIndexMap;
 	private static class InstanceHolder {
 		private static MessageBroker instance = new MessageBrokerImpl();
 	}
@@ -91,11 +91,9 @@ public class MessageBrokerImpl implements MessageBroker {
 		synchronized (eventIndexMap) {
 			increaseIndex(eventIndexMap.get(e.getClass()));
 			if (eventSubscriberMap.get(e.getClass()) == null || eventSubscriberMap.get(e.getClass()).size() == 0) {
-				System.out.println("im here");
 				return null;
 			}
 			try {
-				System.out.println("subscriber = " + eventIndexMap.get(e.getClass()).get());
 				queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
 			} catch (InterruptedException ex) {
 				ex.printStackTrace();
@@ -125,7 +123,13 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public Message awaitMessage(Subscriber m) throws InterruptedException {
+		checkRegistration(m);
 		return queues.get(m).take();
+	}
+
+	private void checkRegistration(Subscriber m){
+		if (queues.get(m) == null)
+			register(m);
 	}
 
 	

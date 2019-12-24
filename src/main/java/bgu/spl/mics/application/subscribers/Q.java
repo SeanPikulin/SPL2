@@ -25,10 +25,10 @@ public class Q extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		getBroker().register(this);
 		subscribeEvent(GadgetAvailableEvent.class, new Callback<GadgetAvailableEvent>() {
 			@Override
 			public void call(GadgetAvailableEvent c) {
+				// update the report with its information
 				c.getReport().setQTime(Qtick);
 				complete(c, inventory.getItem(c.getGadget()));
 			}
