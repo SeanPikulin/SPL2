@@ -48,13 +48,11 @@ public class Inventory {
      * @return 	‘false’ if the gadget is missing, and ‘true’ otherwise
      */
 	public boolean getItem(String gadget){
-		synchronized (this) {
-			if (!gadgets.contains(gadget))
-				return false;
-			else {
-				gadgets.remove(gadget);
-				return true;
-			}
+		if (!gadgets.contains(gadget))
+			return false;
+		else {
+			gadgets.remove(gadget);
+			return true;
 		}
 	}
 

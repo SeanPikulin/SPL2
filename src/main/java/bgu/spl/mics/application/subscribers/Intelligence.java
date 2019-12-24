@@ -39,7 +39,7 @@ public class Intelligence extends Subscriber {
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
 			public void call(TickBroadcast c) {
-					while (missions.size() != 0 && missions.get(0).getTimeIssued() == c.getTick()) {
+					while (missions.size() != 0 && missions.get(0).getTimeIssued() <= c.getTick()) {
 						MissionInfo mission = missions.get(0);
 						Report report = new Report();
 						report.setAgentsSerialNumbers(mission.getSerialAgentsNumbers());

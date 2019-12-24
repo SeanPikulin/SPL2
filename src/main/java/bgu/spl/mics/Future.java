@@ -71,19 +71,23 @@ public class Future<T> {
      *         elapsed, return null.
      */
 	public T get(long timeout, TimeUnit unit) {
-		if(isDone)
+		if (isDone)
 			return this.result;
-		else{
-			try {
-				unit.sleep(timeout);
-			} catch (InterruptedException e) {
-				return this.result;
+		else {
+			synchronized (unit) {
+				try {
+					unit.wait(timeout);
+				} catch (InterruptedException e) {
+					if (isDone)
+						return this.result;
+					else
+						return null;
+				}
+				if (isDone)
+					return this.result;
+				else
+					return null;
 			}
-			if(isDone)
-				return this.result;
-			else
-				return null;
 		}
 	}
-
 }

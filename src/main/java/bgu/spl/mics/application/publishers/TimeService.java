@@ -22,7 +22,7 @@ public class TimeService extends Publisher {
 	public TimeService(int duration) {
 		super("Time_Service");
 		this.duration = duration;
-		counter = 1;
+		counter = 0;
 	}
 
 
