@@ -29,19 +29,20 @@ public class Moneypenny extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		getBroker().register(this);
-		if (serialNumber % 2 == 0) {
+		// in order to assign half of the moneypennies for AgentAvailableEvent and half for Send and Release
+		if (serialNumber % 2 == 0) { // subscribes for AgentAvailableEvent
 			subscribeEvent(AgentAvailableEvent.class, new Callback<AgentAvailableEvent>() {
 				@Override
 				public void call(AgentAvailableEvent c) {
 					Report report = c.getReport();
+					// update the report with its information
 					report.setAgentsNames(squad.getAgentsNames(c.getSerialNumbers()));
 					report.setMoneypenny(serialNumber);
 					complete(c, squad.getAgents(c.getSerialNumbers()));
 				}
 			});
 		}
-		else {
+		else { // subscribes for SendAgentsEvent and ReleaseAgentsEvent
 			subscribeEvent(SendAgentsEvent.class, new Callback<SendAgentsEvent>() {
 				@Override
 				public void call(SendAgentsEvent c) {

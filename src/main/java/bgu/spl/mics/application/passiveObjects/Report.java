@@ -24,18 +24,6 @@ public class Report {
 
 	}
 
-	public Report(String missionName, int m, int moneypenny, List<String> agentsSerialNumbers, List<String> agentsNames, String gadgetName, int timeIssued, int QTime, int timeCreated) {
-		this.missionName = missionName;
-		M = m;
-		this.moneypenny = moneypenny;
-		this.agentsSerialNumbers = agentsSerialNumbers;
-		this.agentsNames = agentsNames;
-		this.gadgetName = gadgetName;
-		this.timeIssued = timeIssued;
-		this.QTime = QTime;
-		this.timeCreated = timeCreated;
-	}
-
 	/**
      * Retrieves the mission name.
      */

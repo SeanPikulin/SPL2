@@ -4,6 +4,9 @@ import bgu.spl.mics.Event;
 
 import java.util.List;
 
+/**
+ * An event representing M's request to send the agents to their mission
+ */
 public class SendAgentsEvent implements Event {
     private List<String> SerialNumbers;
     int duration;

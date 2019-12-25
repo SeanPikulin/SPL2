@@ -5,6 +5,9 @@ import bgu.spl.mics.Event;
 
 import java.util.List;
 
+/**
+ * An event representing M's request to release agents from a mission
+ */
 public class ReleaseAgentsEvent implements Event {
     private List<String> SerialNumbers;
 

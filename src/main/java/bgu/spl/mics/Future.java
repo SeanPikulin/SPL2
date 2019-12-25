@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
  * No public constructor is allowed except for the empty constructor.
  */
 public class Future<T> {
-	private T result;
-	private boolean isDone;
+	private T result; // the result holder
+	private boolean isDone; // if the future was resolved or not
 	/**
 	 * This should be the the only public constructor in this class.
 	 */
@@ -48,7 +48,7 @@ public class Future<T> {
 		synchronized (this) {
 			isDone=true;
 			this.result=result;
-			notifyAll();
+			notifyAll(); // updates that the future is resolved so other threads would be able to get it
 		}
 	}
 	
@@ -71,19 +71,23 @@ public class Future<T> {
      *         elapsed, return null.
      */
 	public T get(long timeout, TimeUnit unit) {
-		if(isDone)
+		if (isDone)
 			return this.result;
-		else{
-			try {
-				unit.sleep(timeout);
-			} catch (InterruptedException e) {
-				return this.result;
+		else {
+			synchronized (unit) {
+				try {
+					unit.wait(timeout);
+				} catch (InterruptedException e) {
+					if (isDone)
+						return this.result;
+					else
+						return null;
+				}
+				if (isDone)
+					return this.result;
+				else
+					return null;
 			}
-			if(isDone)
-				return this.result;
-			else
-				return null;
 		}
 	}
-
 }

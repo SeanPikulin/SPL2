@@ -23,7 +23,7 @@ public class Diary {
 
 	private List<Report> reports;
 	private AtomicInteger total;
-	private static class InstanceHolder {
+	private static class InstanceHolder { // a class for thread-safe singleton
 		private static Diary instance=new Diary();
 	}
 
@@ -78,6 +78,7 @@ public class Diary {
 
 	/**
 	 * Increments the total number of received missions by 1
+	 * The increment is using AtomicInteger to allow thread safe lock free mechanism
 	 */
 	public void incrementTotal(){
 		total.incrementAndGet();

@@ -38,36 +38,31 @@ public class M extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		getBroker().register(this);
 		subscribeEvent(MissionReceivedEvent.class, new Callback<MissionReceivedEvent>() {
 			@Override
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
-				Report report = c.getReport();
-				report.setM(serialNumber);
-				System.out.println("M = " + serialNumber);
+				c.getReport().setM(serialNumber);
 
 				Future<Boolean> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport()));
-				if(agentsFuture!=null) {
+				if(agentsFuture!=null) { // if there is a suitable subscriber
 					boolean isAgentsExists = agentsFuture.get();
-					if (isAgentsExists) {
+					if (isAgentsExists) { // if all the agents are in the squad
 						Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(), c.getReport()));
-						if (gadgetFuture != null) {
+						if (gadgetFuture != null) { // if there is a suitable subscriber
 							boolean isGadgetExists = gadgetFuture.get();
-							if (isGadgetExists) {
-								if (c.getTimeExpired() > c.getReport().getQTime()) {
+							if (isGadgetExists) { // if the gadget is still in the inventory
+								if (c.getTimeExpired() > c.getReport().getQTime()) { // if the tick didn't reached to the expired time of the mission (QTime is the most updated tick)
 									c.getReport().setTimeCreated(currentTick);
 									diary.addReport(c.getReport());
-									System.out.println(c.getMissionName() + " sent");
+									// M allows to send the appropriate agents to the mission
 									getSimplePublisher().sendEvent(new SendAgentsEvent(c.getSerialNumbers(), c.getDuration()));
 
-								} else {
-									System.out.println(c.getMissionName() + " wasnt sent");
+								} else { // due to time expiration, M forces to release the appropriate agents of the mission
 									getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
 								}
 
-							} else {
-								System.out.println(c.getMissionName() + " wasnt sent");
+							} else { // due to lack of gadget, M forces to release the appropriate agents of the mission
 								getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
 							}
 						} else {

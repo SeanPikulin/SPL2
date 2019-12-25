@@ -5,6 +5,9 @@ import bgu.spl.mics.application.passiveObjects.Report;
 
 import java.util.List;
 
+/**
+ * An event representing a mission received by M instance (thread)
+ */
 public class MissionReceivedEvent implements Event {
     private Report report;
     private String missionName;
