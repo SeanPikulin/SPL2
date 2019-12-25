@@ -70,6 +70,9 @@ public class M extends Subscriber {
 								System.out.println(c.getMissionName() + " wasnt sent");
 								getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
 							}
+						} else {
+							System.out.println(c.getMissionName() + " wasnt sent");
+							getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
 						}
 					}
 				}

@@ -70,7 +70,7 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		if (broadcastSubscriberMap.get(b.getClass()) != null) {
+		if (broadcastSubscriberMap.get(b.getClass()) != null&& broadcastSubscriberMap.get(b.getClass()).size() > 0) {
 			broadcastSubscriberMap.get(b.getClass()).forEach(subscriber -> {
 				try {
 					queues.get(subscriber).put(b);
@@ -89,9 +89,21 @@ public class MessageBrokerImpl implements MessageBroker {
 		if (eventIndexMap.get(e.getClass()) == null)
 			eventIndexMap.put(e.getClass(), new AtomicInteger(0));
 		synchronized (eventIndexMap) {
-			increaseIndex(eventIndexMap.get(e.getClass()));
-			if (eventSubscriberMap.get(e.getClass()) == null || eventSubscriberMap.get(e.getClass()).size() == 0) {
-				System.out.println("im here");
+			eventIndexMap.get(e.getClass()).incrementAndGet();
+//			if (eventSubscriberMap.get(e.getClass()) == null || eventSubscriberMap.get(e.getClass()).size() == 0 || queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())) == null) {
+//				System.out.println("im here");
+//				return null;
+//			}
+			if (eventSubscriberMap.get(e.getClass()) == null) {
+				System.out.println("event type" + e.getClass() + "didnt have subcribers at all");
+				return null;
+			}
+			if (eventSubscriberMap.get(e.getClass()).size() == 0) {
+				System.out.println("event type " + e.getClass() + "doesnt have subscribers");
+				return null;
+			}
+			if (queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())) == null) {
+				System.out.println("subscriber " + eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size()).getName() + " doenst have a queue");
 				return null;
 			}
 			try {
@@ -102,13 +114,6 @@ public class MessageBrokerImpl implements MessageBroker {
 			}
 		}
 		return result;
-	}
-
-	private void increaseIndex(AtomicInteger index) {
-		int val;
-		do {
-			val = index.get();
-		} while (!index.compareAndSet(val, val + 1));
 	}
 
 	@Override

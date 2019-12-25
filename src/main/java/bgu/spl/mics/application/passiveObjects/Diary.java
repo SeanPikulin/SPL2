@@ -80,9 +80,6 @@ public class Diary {
 	 * Increments the total number of received missions by 1
 	 */
 	public void incrementTotal(){
-		int val;
-		do {
-			val = getTotal();
-		} while (!total.compareAndSet(val, val + 1));
+		total.incrementAndGet();
 	}
 }

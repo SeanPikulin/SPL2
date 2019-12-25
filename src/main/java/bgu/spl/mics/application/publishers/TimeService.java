@@ -5,6 +5,10 @@ import bgu.spl.mics.Publisher;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.messages.TickBroadcast;
 
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * TimeService is the global system timer There is only one instance of this Publisher.
  * It keeps track of the amount of ticks passed since initialization and notifies
@@ -18,11 +22,13 @@ public class TimeService extends Publisher {
 	private int duration;
 	private boolean terminated;
 	private int counter;
+	private Timer timer;
 
 	public TimeService(int duration) {
 		super("Time_Service");
 		this.duration = duration;
 		counter = 1;
+		timer=new Timer();
 	}
 
 
@@ -34,20 +40,20 @@ public class TimeService extends Publisher {
 	@Override
 	public void run() { // check Timer
 		initialize();
-		while (!terminated) {
-			Broadcast broadcast = new TickBroadcast(counter);
-			getSimplePublisher().sendBroadcast(broadcast);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			counter++;
-			if (counter == duration + 1) {
-				terminated = true;
-				getSimplePublisher().sendBroadcast(new TerminateBroadcast());
-			}
-		}
+			timer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+						Broadcast broadcast = new TickBroadcast(counter);
+						getSimplePublisher().sendBroadcast(broadcast);
+						System.out.println(counter);
+						counter++;
+						if (counter == duration + 1) {
+							terminated = true;
+							getSimplePublisher().sendBroadcast(new TerminateBroadcast());
+							timer.cancel();
+						}
+				}
+			}, 0, 100);
 	}
 
 }
