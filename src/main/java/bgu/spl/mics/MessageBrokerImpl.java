@@ -122,13 +122,13 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void unregister(Subscriber m) {
-		//synchronized (eventSubscriberMap) {
+		synchronized (eventSubscriberMap) {
 		eventSubscriberMap.forEach((k, v) -> v.remove(m));
 
 		for (Class<? extends Event> type:eventSubscriberMap.keySet()) {
 			if(eventSubscriberMap.get(type).size()==0)
 				for(Event e:eventFutureMap.keySet()){
-					if(type.equals(e))
+					if(type.equals(e.getClass()))
 						eventFutureMap.get(e).resolve(null);
 				}
 		}
@@ -136,7 +136,7 @@ public class MessageBrokerImpl implements MessageBroker {
 			broadcastSubscriberMap.forEach((k, v) -> v.remove(m));
 
 			queues.remove(m);
-		//}
+		}
 	}
 
 	@Override

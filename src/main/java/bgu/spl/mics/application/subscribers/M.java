@@ -9,6 +9,7 @@ import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Pair;
 import bgu.spl.mics.application.passiveObjects.Report;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,15 +46,21 @@ public class M extends Subscriber {
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
 				c.getReport().setM(serialNumber);
+				c.getSerialNumbers().sort(new Comparator<String>() {
+					@Override
+					public int compare(String s, String t1) {
+						return s.compareTo(t1);
+					}
+				});
 				Future<Pair<Boolean, Future<Boolean>>> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport(), c.getDuration()));
-				if(agentsFuture!=null) { // if there is a suitable subscriber
-					boolean isAgentsExists = agentsFuture.get().getFirst();
-					if (isAgentsExists) { // if all the agents are in the squad
+				if(agentsFuture!=null && agentsFuture.get()!=null) { // if there is a suitable subscriber
+					Boolean isAgentsExists = agentsFuture.get().getFirst();
+					if (isAgentsExists!=null&isAgentsExists.booleanValue()==true) { // if all the agents are in the squad
 						Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(), c.getReport()));
 						if (gadgetFuture != null) { // if there is a suitable subscriber
 							System.out.println("I am always here");
-							boolean isGadgetExists = gadgetFuture.get();
-							if (isGadgetExists) { // if the gadget is still in the inventory
+							Boolean isGadgetExists = gadgetFuture.get();
+							if (isGadgetExists!=null&&isGadgetExists.booleanValue()==true) { // if the gadget is still in the inventory
 								if (c.getTimeExpired() > c.getReport().getQTime()) { // if the tick didn't reached to the expired time of the mission (QTime is the most updated tick)
 									c.getReport().setTimeCreated(currentTick);
 									diary.addReport(c.getReport());

@@ -41,14 +41,17 @@ public class Squad {
 	 * Releases agents.
 	 */
 	public void releaseAgents(List<String> serials){
-		synchronized (this) { // to avoid a situation where one thread tries to acquire and another thread is trying to release
+
+		 // to avoid a situation where one thread tries to acquire and another thread is trying to release
 			for (String serialNumber:serials) {
 				if (this.agents.get(serialNumber) != null)
-					this.agents.get(serialNumber).release();
+					synchronized (this.agents.get(serialNumber)) {
+						this.agents.get(serialNumber).release();
+						this.agents.get(serialNumber).notifyAll();
+					}
 			}
-			notifyAll();
+
 		}
-	}
 
 	/**
 	 * simulates executing a mission by calling sleep.
@@ -74,29 +77,21 @@ public class Squad {
 			if(!this.agents.containsKey(serials.get(i)))
 				return false;
 		}
-		synchronized (this) { // to avoid a situation where agents can be acquired for more them one mission at a time
-			while (!allNotAcquired(serials)) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		for (String serial:serials) {
+			synchronized (this.agents.get(serial)) {
+				while (!this.agents.get(serial).isAvailable()) {
+					try {
+						this.agents.get(serial).wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-
-			for(int i=0;i<serials.size();i++){
-				this.agents.get(serials.get(i)).acquire();
+				this.agents.get(serial).acquire();
 			}
 		}
 		return true;
 	}
 
-	private boolean allNotAcquired(List<String> serials){
-		for(int i=0;i<serials.size();i++){
-			if(!this.agents.get(serials.get(i)).isAvailable())
-				return false;
-		}
-		return true;
-	}
     /**
      * gets the agents names
      * @param serials the serial numbers of the agents
