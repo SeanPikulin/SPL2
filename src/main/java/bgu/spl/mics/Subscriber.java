@@ -127,10 +127,12 @@ public abstract class Subscriber extends RunnableSubPub {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (eventTypeMap.containsKey(m.getClass()))
-                eventTypeMap.get(m.getClass()).call(m); // check about generics
-            else
-                broadcastTypeMap.get(m.getClass()).call(m);
+            if (m != null) {
+                if (eventTypeMap.containsKey(m.getClass()))
+                    eventTypeMap.get(m.getClass()).call(m); // check about generics
+                else
+                    broadcastTypeMap.get(m.getClass()).call(m);
+            }
         }
         broker.unregister(this);
     }

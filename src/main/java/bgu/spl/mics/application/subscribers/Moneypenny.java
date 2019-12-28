@@ -1,8 +1,10 @@
 package bgu.spl.mics.application.subscribers;
 
 import bgu.spl.mics.Callback;
+import bgu.spl.mics.Future;
 import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.*;
+import bgu.spl.mics.application.passiveObjects.Pair;
 import bgu.spl.mics.application.passiveObjects.Report;
 import bgu.spl.mics.application.passiveObjects.Squad;
 
@@ -29,40 +31,32 @@ public class Moneypenny extends Subscriber {
 
 	@Override
 	protected void initialize() {
-		// in order to assign half of the moneypennies for AgentAvailableEvent and half for Send and Release
-		if (serialNumber % 2 == 0) { // subscribes for AgentAvailableEvent
-			subscribeEvent(AgentAvailableEvent.class, new Callback<AgentAvailableEvent>() {
-				@Override
-				public void call(AgentAvailableEvent c) {
-					Report report = c.getReport();
-					// update the report with its information
-					report.setAgentsNames(squad.getAgentsNames(c.getSerialNumbers()));
-					report.setMoneypenny(serialNumber);
-					complete(c, squad.getAgents(c.getSerialNumbers()));
+		getBroker().register(this);
+		subscribeEvent(AgentAvailableEvent.class, new Callback<AgentAvailableEvent>() {
+			@Override
+			public void call(AgentAvailableEvent c) {
+				Report report = c.getReport();
+				// update the report with its information
+				report.setAgentsNames(squad.getAgentsNames(c.getSerialNumbers()));
+				report.setMoneypenny(serialNumber);
+				Future<Boolean> isToSendAgentsFuture = new Future<>();
+				complete(c, new Pair<>(squad.getAgents(c.getSerialNumbers()), isToSendAgentsFuture));
+				Boolean isToSendAgents = isToSendAgentsFuture.get();
+				if (isToSendAgents) {
+					squad.sendAgents(c.getSerialNumbers(), c.getDuration());
 				}
-			});
-		}
-		else { // subscribes for SendAgentsEvent and ReleaseAgentsEvent
-			subscribeEvent(SendAgentsEvent.class, new Callback<SendAgentsEvent>() {
-				@Override
-				public void call(SendAgentsEvent c) {
-					squad.sendAgents(c.getSerialNumbers(),c.getDuration());
-				}
-			});
-			subscribeEvent(ReleaseAgentsEvent.class, new Callback<ReleaseAgentsEvent>() {
-				@Override
-				public void call(ReleaseAgentsEvent c) {
+				else {
 					squad.releaseAgents(c.getSerialNumbers());
 				}
-			});
-		}
+			}
+		});
 		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
 			@Override
 			public void call(TerminateBroadcast c) {
 				terminate();
 			}
 		});
-		
+
 	}
 
 }

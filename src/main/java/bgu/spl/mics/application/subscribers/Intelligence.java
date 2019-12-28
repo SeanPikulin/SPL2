@@ -35,6 +35,7 @@ public class Intelligence extends Subscriber {
 
 	@Override
 	protected void initialize() {
+		getBroker().register(this);
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
 			public void call(TickBroadcast c) {

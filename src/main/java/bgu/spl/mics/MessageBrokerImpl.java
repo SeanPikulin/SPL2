@@ -1,5 +1,7 @@
 package bgu.spl.mics;
 
+import bgu.spl.mics.application.passiveObjects.Pair;
+
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -88,18 +90,14 @@ public class MessageBrokerImpl implements MessageBroker {
 		eventFutureMap.put(e, result);
 		if (eventIndexMap.get(e.getClass()) == null)
 			eventIndexMap.put(e.getClass(), new AtomicInteger(0));
-		synchronized (eventIndexMap) {
+		synchronized (eventSubscriberMap) {
 			eventIndexMap.get(e.getClass()).incrementAndGet();
-//			if (eventSubscriberMap.get(e.getClass()) == null || eventSubscriberMap.get(e.getClass()).size() == 0 || queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())) == null) {
-//				System.out.println("im here");
-//				return null;
-//			}
 			if (eventSubscriberMap.get(e.getClass()) == null) {
-				System.out.println("event type" + e.getClass() + "didnt have subcribers at all");
+				System.out.println("event type" + e.getClass() + " didnt have subcribers at all");
 				return null;
 			}
 			if (eventSubscriberMap.get(e.getClass()).size() == 0) {
-				System.out.println("event type " + e.getClass() + "doesnt have subscribers");
+				System.out.println("event type " + e.getClass() + " doesnt have subscribers");
 				return null;
 			}
 			if (queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())) == null) {
@@ -107,7 +105,8 @@ public class MessageBrokerImpl implements MessageBroker {
 				return null;
 			}
 			try {
-				System.out.println("subscriber = " + eventIndexMap.get(e.getClass()).get());
+				System.out.println("subscriber = " + eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size() + " for event " + e.getClass());
+				System.out.println("subscriber " + eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size()).getName() + " queue: " + queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())));
 				queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
 			} catch (InterruptedException ex) {
 				ex.printStackTrace();
@@ -123,14 +122,30 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	@Override
 	public void unregister(Subscriber m) {
-		queues.remove(m);
+		//synchronized (eventSubscriberMap) {
 		eventSubscriberMap.forEach((k, v) -> v.remove(m));
-		broadcastSubscriberMap.forEach((k, v) -> v.remove(m));
+
+		for (Class<? extends Event> type:eventSubscriberMap.keySet()) {
+			if(eventSubscriberMap.get(type).size()==0)
+				for(Event e:eventFutureMap.keySet()){
+					if(type.equals(e))
+						eventFutureMap.get(e).resolve(null);
+				}
+		}
+
+			broadcastSubscriberMap.forEach((k, v) -> v.remove(m));
+
+			queues.remove(m);
+		//}
 	}
 
 	@Override
 	public Message awaitMessage(Subscriber m) throws InterruptedException {
-		return queues.get(m).take();
+		if (queues.get(m) == null)
+			return null;
+		Message message = queues.get(m).take();
+		System.out.println(message.getClass().toString() + " has taken by " + m.getName());
+		return message;
 	}
 
 	

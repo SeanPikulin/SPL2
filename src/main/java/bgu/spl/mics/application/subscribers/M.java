@@ -6,6 +6,7 @@ import bgu.spl.mics.Subscriber;
 import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Agent;
 import bgu.spl.mics.application.passiveObjects.Diary;
+import bgu.spl.mics.application.passiveObjects.Pair;
 import bgu.spl.mics.application.passiveObjects.Report;
 
 import java.util.List;
@@ -38,38 +39,42 @@ public class M extends Subscriber {
 
 	@Override
 	protected void initialize() {
+		getBroker().register(this);
 		subscribeEvent(MissionReceivedEvent.class, new Callback<MissionReceivedEvent>() {
 			@Override
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
 				c.getReport().setM(serialNumber);
-
-				Future<Boolean> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport()));
+				Future<Pair<Boolean, Future<Boolean>>> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport(), c.getDuration()));
 				if(agentsFuture!=null) { // if there is a suitable subscriber
-					boolean isAgentsExists = agentsFuture.get();
+					boolean isAgentsExists = agentsFuture.get().getFirst();
 					if (isAgentsExists) { // if all the agents are in the squad
 						Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(), c.getReport()));
 						if (gadgetFuture != null) { // if there is a suitable subscriber
+							System.out.println("I am always here");
 							boolean isGadgetExists = gadgetFuture.get();
 							if (isGadgetExists) { // if the gadget is still in the inventory
 								if (c.getTimeExpired() > c.getReport().getQTime()) { // if the tick didn't reached to the expired time of the mission (QTime is the most updated tick)
 									c.getReport().setTimeCreated(currentTick);
 									diary.addReport(c.getReport());
-									// M allows to send the appropriate agents to the mission
-									getSimplePublisher().sendEvent(new SendAgentsEvent(c.getSerialNumbers(), c.getDuration()));
+									agentsFuture.get().getSecond().resolve(true);
 
 								} else { // due to time expiration, M forces to release the appropriate agents of the mission
-									getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+									agentsFuture.get().getSecond().resolve(false);
 								}
 
 							} else { // due to lack of gadget, M forces to release the appropriate agents of the mission
-								getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+								agentsFuture.get().getSecond().resolve(false);
 							}
 						} else {
-							System.out.println(c.getMissionName() + " wasnt sent");
-							getSimplePublisher().sendEvent(new ReleaseAgentsEvent(c.getSerialNumbers()));
+							agentsFuture.get().getSecond().resolve(false);
 						}
+					} else {
+						agentsFuture.get().getSecond().resolve(false);
 					}
+				}
+				else{
+					terminate();
 				}
 			}
 		});

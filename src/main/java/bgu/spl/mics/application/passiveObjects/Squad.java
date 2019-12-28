@@ -43,7 +43,8 @@ public class Squad {
 	public void releaseAgents(List<String> serials){
 		synchronized (this) { // to avoid a situation where one thread tries to acquire and another thread is trying to release
 			for (String serialNumber:serials) {
-				this.agents.get(serialNumber).release();
+				if (this.agents.get(serialNumber) != null)
+					this.agents.get(serialNumber).release();
 			}
 			notifyAll();
 		}
@@ -59,7 +60,7 @@ public class Squad {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("finished"+time);
 		releaseAgents(serials);
 	}
 
