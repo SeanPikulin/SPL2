@@ -38,6 +38,11 @@ public class Intelligence extends Subscriber {
 		getBroker().register(this);
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
+			/**
+			 * This function sends the MissionReceivedEvent-when the time issued of a mission occurs.
+			 * It also adds part of the report's information which is already known and removes the
+			 * mission when it is sent.
+			 */
 			public void call(TickBroadcast c) {
 				// while there are available missions and the closest mission's time has exceeded
 					while (missions.size() != 0 && missions.get(0).getTimeIssued() <= c.getTick()) {
@@ -50,12 +55,15 @@ public class Intelligence extends Subscriber {
 						report.setTimeIssued(mission.getTimeIssued());
 						Event event = new MissionReceivedEvent(mission.getMissionName(), mission.getSerialAgentsNumbers(), mission.getGadget(), mission.getTimeExpired(), mission.getDuration(), report);
 						getSimplePublisher().sendEvent(event);
-						missions.remove(0); // the mission sent, therefore we remove it
+						missions.remove(0);
 					}
 				}
 		});
 		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
 			@Override
+			/**
+			 * When the TerminateBroadcast received,the intelligence calls the terminate function
+			 */
 			public void call(TerminateBroadcast c) {
 				terminate();
 			}

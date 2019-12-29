@@ -28,6 +28,10 @@ public class Q extends Subscriber {
 		getBroker().register(this);
 		subscribeEvent(GadgetAvailableEvent.class, new Callback<GadgetAvailableEvent>() {
 			@Override
+			/**
+			 * When GadgetAvailableEvent is received, the function calls the complete function that
+			 * gets the item if exists.It also adds the QTime o the report.
+			 */
 			public void call(GadgetAvailableEvent c) {
 				// update the report with its information
 				c.getReport().setQTime(Qtick);
@@ -36,12 +40,18 @@ public class Q extends Subscriber {
 		});
 		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
 			@Override
+			/**
+			 * When TickBroadcast is received, the function updates the Qtick
+			 */
 			public void call(TickBroadcast c) {
 				Qtick = c.getTick();
 			}
 		});
 		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
 			@Override
+			/**
+			 * when TerminateBroadcast is received, the function calls the terminate function
+			 */
 			public void call(TerminateBroadcast c) {
 				terminate();
 			}

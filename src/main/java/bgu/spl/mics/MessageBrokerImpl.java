@@ -37,6 +37,12 @@ public class MessageBrokerImpl implements MessageBroker {
 		eventIndexMap = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * This function adds the subscriber to the type of event in the eventSubscriberMap.
+	 * @param type The type to subscribe to,
+	 * @param m
+	 * @param <T>
+	 */
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, Subscriber m) {
 		synchronized (eventSubscriberMap) {
@@ -50,6 +56,11 @@ public class MessageBrokerImpl implements MessageBroker {
 		}
 	}
 
+	/**
+	 * This function adds the subscriber to the type of broadcasr in the broadcastSubscriberMap.
+	 * @param type 	The type to subscribe to.
+	 * @param m
+	 */
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, Subscriber m) {
 		synchronized (broadcastSubscriberMap) {
@@ -64,12 +75,23 @@ public class MessageBrokerImpl implements MessageBroker {
 		}
 	}
 
+	/**
+	 * this function gets the Future of the completed event and resolves it with the result.
+	 * @param e      The completed event.
+	 * @param result The resolved result of the completed event.
+	 * @param <T>
+	 */
 	@Override
 	public <T> void complete(Event<T> e, T result) {
 		eventFutureMap.get(e).resolve(result);
 
 	}
 
+	/**
+	 * This function adds the broadcast to each subscriber's queue that is in the broadcastSubscriberMap the
+	 * broadcast param.
+	 * @param b 	The message to added to the queues.
+	 */
 	@Override
 	public void sendBroadcast(Broadcast b) {
 		if (broadcastSubscriberMap.get(b.getClass()) != null&& broadcastSubscriberMap.get(b.getClass()).size() > 0) {
@@ -85,6 +107,10 @@ public class MessageBrokerImpl implements MessageBroker {
 
 	
 	@Override
+	/**
+	 * This function adds an event to a subscriber's queue using the round-robin manner. If there is no such
+	 * subscriber or the subscriber unregistered itself, it returns null.
+	 */
 	public <T> Future<T> sendEvent(Event<T> e) {
 		Future result = new Future<T>();
 		eventFutureMap.put(e, result);
@@ -93,20 +119,15 @@ public class MessageBrokerImpl implements MessageBroker {
 		synchronized (eventSubscriberMap) {
 			eventIndexMap.get(e.getClass()).incrementAndGet();
 			if (eventSubscriberMap.get(e.getClass()) == null) {
-				System.out.println("event type" + e.getClass() + " didnt have subcribers at all");
 				return null;
 			}
 			if (eventSubscriberMap.get(e.getClass()).size() == 0) {
-				System.out.println("event type " + e.getClass() + " doesnt have subscribers");
 				return null;
 			}
 			if (queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())) == null) {
-				System.out.println("subscriber " + eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size()).getName() + " doenst have a queue");
 				return null;
 			}
 			try {
-				System.out.println("subscriber = " + eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size() + " for event " + e.getClass());
-				System.out.println("subscriber " + eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size()).getName() + " queue: " + queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())));
 				queues.get(eventSubscriberMap.get(e.getClass()).get(eventIndexMap.get(e.getClass()).get() % eventSubscriberMap.get(e.getClass()).size())).put(e);
 			} catch (InterruptedException ex) {
 				ex.printStackTrace();
@@ -116,11 +137,19 @@ public class MessageBrokerImpl implements MessageBroker {
 	}
 
 	@Override
+	/**
+	 * This function creates a queue for a subscriber
+	 */
 	public void register(Subscriber m) {
 		queues.put(m, new LinkedBlockingQueue<>());
 	}
 
 	@Override
+	/**
+	 * this function removes the subscriber from the eventsSubscriberMap and broadcastSubscriberMap,
+	 * checks if there are events which there are no more suitable subscribers to handle them and resolves
+	 * them with null and removes the queue of this subscriber.
+	 */
 	public void unregister(Subscriber m) {
 		synchronized (eventSubscriberMap) {
 		eventSubscriberMap.forEach((k, v) -> v.remove(m));
@@ -140,11 +169,14 @@ public class MessageBrokerImpl implements MessageBroker {
 	}
 
 	@Override
+	/**
+	 * this function awaits for a message to get into the queue of m ,using blocking queue
+	 * and returns the message when it gets it.
+	 */
 	public Message awaitMessage(Subscriber m) throws InterruptedException {
 		if (queues.get(m) == null)
 			return null;
 		Message message = queues.get(m).take();
-		System.out.println(message.getClass().toString() + " has taken by " + m.getName());
 		return message;
 	}
 

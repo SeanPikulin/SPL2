@@ -37,6 +37,12 @@ public class TimeService extends Publisher {
 		this.terminated = false;
 	}
 
+	/**
+	 * The function sends a time tick to all subscribers each 100 milliseconds
+	 * for the appropriate duration. In the end, it sends the terminate broadcast.
+	 * The function uses Timer for correct time management
+	 *
+	 */
 	@Override
 	public void run() { // check Timer
 		initialize();

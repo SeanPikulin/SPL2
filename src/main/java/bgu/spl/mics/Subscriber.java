@@ -114,8 +114,7 @@ public abstract class Subscriber extends RunnableSubPub {
     }
 
     /**
-     * The entry point of the Subscriber. TODO: you must complete this code
-     * otherwise you will end up in an infinite loop.
+     * The entry point of the Subscriber.
      */
     @Override
     public final void run() {

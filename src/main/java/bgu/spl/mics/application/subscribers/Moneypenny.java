@@ -25,9 +25,6 @@ public class Moneypenny extends Subscriber {
 		this.serialNumber=serialNumber;
 	}
 
-	public int getSerialNumber() {
-		return serialNumber;
-	}
 
 	@Override
 	protected void initialize() {
@@ -35,6 +32,12 @@ public class Moneypenny extends Subscriber {
 		subscribeEvent(AgentAvailableEvent.class, new Callback<AgentAvailableEvent>() {
 			@Override
 			public void call(AgentAvailableEvent c) {
+				/**
+				 * this function gets an AgentAvailableEvent, adds the MoneyPenny that handles this event and the
+				 * agents' names to the report. Then, checks if it can send the agents to the mission (according to
+				 * M's answer) and sends them.Otherwise, it releases them.
+				 *
+				 */
 				Report report = c.getReport();
 				// update the report with its information
 				report.setAgentsNames(squad.getAgentsNames(c.getSerialNumbers()));
@@ -52,6 +55,9 @@ public class Moneypenny extends Subscriber {
 		});
 		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
 			@Override
+			/**
+			 * this function calls the terminate function when the TerminateBroadcast is received
+			 */
 			public void call(TerminateBroadcast c) {
 				terminate();
 			}

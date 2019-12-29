@@ -10,8 +10,8 @@ import java.util.*;
 public class Squad {
 
 	private Map<String, Agent> agents;
-
-	private static class InstanceHolder { // a class for thread-safe singleton
+	// a class for thread-safe singleton
+	private static class InstanceHolder {
 		private static Squad instance=new Squad();
 	}
 
@@ -38,7 +38,7 @@ public class Squad {
 	}
 
 	/**
-	 * Releases agents.
+	 * Releases agents.Synchronization on each agent separately
 	 */
 	public void releaseAgents(List<String> serials){
 
@@ -79,6 +79,7 @@ public class Squad {
 		}
 		for (String serial:serials) {
 			synchronized (this.agents.get(serial)) {
+				//To enforce the pre-condition: agent is available
 				while (!this.agents.get(serial).isAvailable()) {
 					try {
 						this.agents.get(serial).wait();

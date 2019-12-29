@@ -43,6 +43,15 @@ public class M extends Subscriber {
 		getBroker().register(this);
 		subscribeEvent(MissionReceivedEvent.class, new Callback<MissionReceivedEvent>() {
 			@Override
+			/**
+			 * When MissionReceivedEvent is received, the function increments the diary's total and adds M to the report.
+			 * Then it sorts the agents' serial numbers to enable resource ordering when acquiring agents.
+			 * After it, sends the AgentAvailableEvent to check and get the agents for the mission if there is a
+			 * suitable subscriber.
+			 * Then, checks if the gadget is still in the inventory, and after that checks if the tick didn't reach
+			 * the expired time of the mission.
+			 * If one of the conditions isn't met, the functions releases the agents of the mission or terminate.
+			 */
 			public void call(MissionReceivedEvent c) {
 				diary.incrementTotal();
 				c.getReport().setM(serialNumber);
@@ -53,50 +62,39 @@ public class M extends Subscriber {
 					}
 				});
 				Future<Pair<Boolean, Future<Boolean>>> agentsFuture = getSimplePublisher().sendEvent(new AgentAvailableEvent(c.getSerialNumbers(),c.getReport(), c.getDuration()));
-				if(agentsFuture!=null && agentsFuture.get()!=null) { // if there is a suitable subscriber
+				if(agentsFuture!=null && agentsFuture.get()!=null) {
 					Boolean isAgentsExists = agentsFuture.get().getFirst();
-					if (isAgentsExists!=null&isAgentsExists.booleanValue()==true) { // if all the agents are in the squad
+					if (isAgentsExists != null & isAgentsExists.booleanValue() == true) { // if all the agents are in the squad
 						Future<Boolean> gadgetFuture = getSimplePublisher().sendEvent(new GadgetAvailableEvent(c.getGadget(), c.getReport()));
 						if (gadgetFuture != null) { // if there is a suitable subscriber
-							System.out.println("I am always here");
 							Boolean isGadgetExists = gadgetFuture.get();
-							if (isGadgetExists!=null&&isGadgetExists.booleanValue()==true) { // if the gadget is still in the inventory
-								if (c.getTimeExpired() > c.getReport().getQTime()) { // if the tick didn't reached to the expired time of the mission (QTime is the most updated tick)
+							if (isGadgetExists != null && isGadgetExists.booleanValue() == true) { // if the gadget is still in the inventory
+								if (c.getTimeExpired() > c.getReport().getQTime()) { //  QTime is the most updated tick
 									c.getReport().setTimeCreated(currentTick);
 									diary.addReport(c.getReport());
 									agentsFuture.get().getSecond().resolve(true);
 
-								} else { // due to time expiration, M forces to release the appropriate agents of the mission
+								} else  // due to time expiration, M forces to release the appropriate agents of the mission
 									agentsFuture.get().getSecond().resolve(false);
-								}
 
-							} else { // due to lack of gadget, M forces to release the appropriate agents of the mission
+							} else // due to lack of gadget, M forces to release the appropriate agents of the mission
 								agentsFuture.get().getSecond().resolve(false);
-							}
-						} else {
+						} else
 							agentsFuture.get().getSecond().resolve(false);
-						}
-					} else {
+					} else
 						agentsFuture.get().getSecond().resolve(false);
-					}
-				}
-				else{
+				}else
 					terminate();
-				}
 			}
 		});
-		subscribeBroadcast(TickBroadcast.class, new Callback<TickBroadcast>() {
-			@Override
-			public void call(TickBroadcast c) {
-				currentTick = c.getTick();
-			}
-		});
-		subscribeBroadcast(TerminateBroadcast.class, new Callback<TerminateBroadcast>() {
-			@Override
-			public void call(TerminateBroadcast c) {
-				terminate();
-			}
-		});
+		/**
+		 * this function gets a TimeBroadcast and updates the current tick
+		 */
+		subscribeBroadcast(TickBroadcast.class, c -> currentTick = c.getTick());
+		/**
+		 * this function gets a TerminateBroadcast and calls the terminate function
+		 */
+		subscribeBroadcast(TerminateBroadcast.class, c -> terminate());
 	}
 
 }
