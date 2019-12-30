@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e825d3bf-0426-4c84-826b-15bc5afb0bee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Pair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/MessageBrokerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/Subscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MI6.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MI6.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/publishers/TimeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Intelligence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/M.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Moneypenny.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/subscribers/Q.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +161,7 @@
       <workItem from="1577531776948" duration="478000" />
       <workItem from="1577532406751" duration="7111000" />
       <workItem from="1577619847370" duration="7222000" />
+      <workItem from="1577712037382" duration="680000" />
     </task>
     <task id="LOCAL-00001" summary="Subscriber started">
       <created>1576443185383</created>
@@ -287,28 +282,28 @@
     </state>
     <state x="566" y="227" width="374" height="351" key="FileChooserDialogImpl/70.27.1296.741@70.27.1296.741" timestamp="1576872396700" />
     <state x="778" y="311" width="447" height="498" key="FileChooserDialogImpl/70.27.1850.1053@70.27.1850.1053" timestamp="1576866552384" />
-    <state width="1804" height="360" key="GridCell.Tab.0.bottom" timestamp="1577540420316">
+    <state width="1804" height="360" key="GridCell.Tab.0.bottom" timestamp="1577712270981">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state width="1804" height="275" key="GridCell.Tab.0.bottom/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182186" />
+    <state width="1804" height="360" key="GridCell.Tab.0.bottom/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1577712270981" />
     <state width="1804" height="360" key="GridCell.Tab.0.bottom/70.27.1850.1053@70.27.1850.1053" timestamp="1577540420316" />
     <state width="1804" height="275" key="GridCell.Tab.0.bottom/70.27.3770.1053@70.27.3770.1053" timestamp="1577121508368" />
-    <state width="1804" height="360" key="GridCell.Tab.0.center" timestamp="1577540420316">
+    <state width="1804" height="360" key="GridCell.Tab.0.center" timestamp="1577712270981">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state width="1804" height="275" key="GridCell.Tab.0.center/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
+    <state width="1804" height="360" key="GridCell.Tab.0.center/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1577712270981" />
     <state width="1804" height="360" key="GridCell.Tab.0.center/70.27.1850.1053@70.27.1850.1053" timestamp="1577540420316" />
     <state width="1804" height="275" key="GridCell.Tab.0.center/70.27.3770.1053@70.27.3770.1053" timestamp="1577121508367" />
-    <state width="1804" height="360" key="GridCell.Tab.0.left" timestamp="1577540420315">
+    <state width="1804" height="360" key="GridCell.Tab.0.left" timestamp="1577712270981">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state width="1804" height="275" key="GridCell.Tab.0.left/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
+    <state width="1804" height="360" key="GridCell.Tab.0.left/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1577712270981" />
     <state width="1804" height="360" key="GridCell.Tab.0.left/70.27.1850.1053@70.27.1850.1053" timestamp="1577540420315" />
     <state width="1804" height="275" key="GridCell.Tab.0.left/70.27.3770.1053@70.27.3770.1053" timestamp="1577121508366" />
-    <state width="1804" height="360" key="GridCell.Tab.0.right" timestamp="1577540420316">
+    <state width="1804" height="360" key="GridCell.Tab.0.right" timestamp="1577712270981">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state width="1804" height="275" key="GridCell.Tab.0.right/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576341182185" />
+    <state width="1804" height="360" key="GridCell.Tab.0.right/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1577712270981" />
     <state width="1804" height="360" key="GridCell.Tab.0.right/70.27.1850.1053@70.27.1850.1053" timestamp="1577540420316" />
     <state width="1804" height="275" key="GridCell.Tab.0.right/70.27.3770.1053@70.27.3770.1053" timestamp="1577121508367" />
     <state width="1804" height="340" key="GridCell.Tab.1.bottom" timestamp="1577534107380">
@@ -353,12 +348,13 @@
     <state x="313" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1296.741@70.27.1296.741" timestamp="1576873354219" />
     <state x="417" y="178" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1850.1053@70.27.1850.1053" timestamp="1577532504946" />
     <state x="289" y="178" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.3770.1053@70.27.3770.1053" timestamp="1577121652525" />
-    <state x="649" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1577619860164">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="651" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1577712038493">
+      <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="649" y="381" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1577619860164" />
     <state x="477" y="276" key="com.intellij.ide.util.TipDialog/70.27.1296.741@70.27.1296.741" timestamp="1576930975188" />
     <state x="2523" y="363" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576325388684" />
+    <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1577712038493" />
     <state x="651" y="381" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1577531783347" />
     <state x="486" y="317" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576443171589">
       <screen x="70" y="27" width="1296" height="741" />
@@ -384,16 +380,5 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="720" y="467" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1577297882290" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/mics/application/passiveObjects/Squad.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

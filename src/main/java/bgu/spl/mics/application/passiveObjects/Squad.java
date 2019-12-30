@@ -10,6 +10,7 @@ import java.util.*;
 public class Squad {
 
 	private Map<String, Agent> agents;
+	private static int CAST_TO_MILLISECONDS=100;
 	// a class for thread-safe singleton
 	private static class InstanceHolder {
 		private static Squad instance=new Squad();
@@ -59,7 +60,7 @@ public class Squad {
 	 */
 	public void sendAgents(List<String> serials, int time){
 		try {
-			Thread.sleep(time * 100);
+			Thread.sleep(time * CAST_TO_MILLISECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

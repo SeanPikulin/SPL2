@@ -23,6 +23,8 @@ public class TimeService extends Publisher {
 	private boolean terminated;
 	private int counter;
 	private Timer timer;
+	private static final int TIMER_PERIOD  = 100;
+	private static final int TIMER_DELAY=0;
 
 	public TimeService(int duration) {
 		super("Time_Service");
@@ -59,7 +61,7 @@ public class TimeService extends Publisher {
 							timer.cancel();
 						}
 				}
-			}, 0, 100);
+			}, TIMER_DELAY, TIMER_PERIOD);
 	}
 
 }
